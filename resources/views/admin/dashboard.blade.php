@@ -64,7 +64,8 @@
                                 <thead>
                                 <tr>
                                     <th class="text-center alinha" style="width:15%;">OM</th>
-                                    <th class="text-center alinha" style="width:75%;">Resposta
+                                    <th class="text-center alinha" style="width:70%;">Resposta
+                                    <th class="text-center alinha" style="width:5%;">Data resposta
                                     </th>
                                     <th class="text-center alinha" style="width:10%;">Anexo
                                     </th>
@@ -77,6 +78,7 @@
                                     <tr>
                                         <th scope="row" class="alinha">{{$oms[$i]->sigla}}</th>
                                         <td scope="col" class="text-left tabela_valor tab_resposta" id="resposta_{{$oms[$i]->id}}"></td>
+                                        <td scope="col" class="text-left tabela_valor tab_data" id="data_{{$oms[$i]->id}}"></td>
                                         <td scope="col" class="text-center tabela_valor tab_anexo alinha" id="anexo_{{$oms[$i]->id}}"></td>
 
                                     </tr>
@@ -152,12 +154,14 @@
             $('.anexo_pergunta').empty();
             $('.tabela_valor').empty();
             $('.tab_resposta').html('<div class="text-center">Não responseu</div>');
+            $('.tab_data').html('<div class="text-center"> -- </div>');
             $('.tab_anexo').html('<div class="text-center">sem anexo</div>');
             $('.respostas').removeClass('enable').addClass('disable');
             $('.aviso_respostas').removeClass('enable').addClass('disable');
             var html = '';
             $.getJSON('/admin/detalhes/perguntas/respostas/' + id, function (pergunta) {
                 for (var i = 0; i < pergunta.length; i++) {
+                    console.log(pergunta[i])
                     var anexo = '';
                     if (pergunta[i].anexo != null) {
                         anexo += '<label><b>Anexo de referência: </b><a href="/storage/' + pergunta[i].anexo + '" target="_blank"><i class="fa fa-file-text"> anexo</i></a></label>'
@@ -173,7 +177,10 @@
 
                     for (var j = 0; j < pergunta[i].respostas.length; j++) {
 
+                        var date = moment(pergunta[i].respostas[j].created_at).format('DD/MM/YYYY HH:mm:ss');
+
                         $('#resposta_'+pergunta[i].respostas[j].users.om.id).text(pergunta[i].respostas[j].resposta);
+                        $('#data_'+pergunta[i].respostas[j].users.om.id).text(date);
                         var anexo_tabela = '';
                         if (pergunta[i].respostas[j].anexo_resposta != null) {
                             anexo_tabela += '<br><label><a href="/storage/' + pergunta[i].respostas[j].anexo_resposta + '" target="_blank"><i class="fa fa-file-text"> anexo</i></a></label>\n';
