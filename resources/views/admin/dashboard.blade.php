@@ -13,9 +13,7 @@
                 </div>
             </div>
         </div>
-        @foreach($oms as $om)
-            {{$om->sigla}}
-        @endforeach
+
         <div class="alert alert-simples">
             <div class="table-responsive">
                 <table id="perguntas_table"
