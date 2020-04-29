@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Respostas;
 
 use App\Http\Controllers\Controller;
+use App\Models\Perguntas\Perguntas;
 use App\Models\Respostas\Respostas;
 use Illuminate\Http\Request as FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -16,40 +17,48 @@ class RespostasController extends Controller
     public function cadastra(FormRequest $request,$id)
     {
 
-        $resposta = new Respostas();
-        $resposta->resposta = $request['resposta'];
-        $resposta->pergunta_id = $id;
-        $resposta->user_id = Auth::user()->id;
+        $pergunta = Perguntas::find($id);
+
+        if($pergunta->status == "Ativo"){
+            $resposta = new Respostas();
+            $resposta->resposta = $request['resposta'];
+            $resposta->pergunta_id = $id;
+            $resposta->user_id = Auth::user()->id;
 
 
 
-        if ($request->hasFile('anexo_resposta') && $request->file('anexo_resposta')->isValid()) {
+            if ($request->hasFile('anexo_resposta') && $request->file('anexo_resposta')->isValid()) {
 
-            $folderPath = 'arquivos/perguntas/resposta/anexo/';
+                $folderPath = 'arquivos/perguntas/resposta/anexo/';
 
-            // Define um aleatório para o arquivo baseado no timestamps atual
-            $name = uniqid(date('HisYmd'));
+                // Define um aleatório para o arquivo baseado no timestamps atual
+                $name = uniqid(date('HisYmd'));
 
-            // Recupera a extensão do arquivo
-            $extension = $request->anexo_resposta->extension();
+                // Recupera a extensão do arquivo
+                $extension = $request->anexo_resposta->extension();
 
-            // Define finalmente o nome
-            $nameFile = "{$name}.{$extension}";
+                // Define finalmente o nome
+                $nameFile = "{$name}.{$extension}";
 
-            // Faz o upload:
-            $upload = $request->anexo_resposta->storeAs($folderPath, $nameFile);
-            $resposta->anexo_resposta = $folderPath . $nameFile;
-        }
+                // Faz o upload:
+                $upload = $request->anexo_resposta->storeAs($folderPath, $nameFile);
+                $resposta->anexo_resposta = $folderPath . $nameFile;
+            }
 
-        $resposta->save();
+            $resposta->save();
 
-        if ($resposta instanceof Model) {
+            if ($resposta instanceof Model) {
 
-            Request::session()->flash('sucesso', "Resposta enviada com sucesso.");
-            return back();
+                Request::session()->flash('sucesso', "Resposta enviada com sucesso.");
+                return back();
 
+            } else {
+                Request::session()->flash('error', "Ocorreu um erro, tente novamente.");
+
+                return back();
+            }
         } else {
-            Request::session()->flash('erro', "Ocorreu um erro, tente novamente.");
+            Request::session()->flash('error', "Pergunta não disponível.");
 
             return back();
         }

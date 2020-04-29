@@ -16,7 +16,8 @@ class Perguntas extends Model
         $fillable = [
         'descricao',
         'anexo',
-        'user_id'
+        'user_id',
+        'status',
     ];
 
 

@@ -9,6 +9,7 @@ use App\Models\Perguntas\Perguntas;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request as FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Request;
 
 class PerguntaController extends Controller
@@ -63,16 +64,52 @@ class PerguntaController extends Controller
     }
 
 
-
-    public function edita(FormRequest $request,$id)
+    public function edita(FormRequest $request)
     {
-        $pergunta = Perguntas::find($id);
+
+
+        $pergunta = Perguntas::find($request['pergunta_id']);
         $pergunta->descricao = $request['descricao'];
-        $pergunta->anexo = $request['anexo'];
+        //$pergunta->anexo = $request['anexo'];
+
+        if ($request->hasFile('anexo') && $request->file('anexo')->isValid()) {
+
+            Storage::delete($pergunta->anexo);
+
+            $folderPath = 'arquivos/perguntas/anexo/';
+
+            // Define um aleatório para o arquivo baseado no timestamps atual
+            $name = uniqid(date('HisYmd'));
+
+            // Recupera a extensão do arquivo
+            $extension = $request->anexo->extension();
+
+            // Define finalmente o nome
+            $nameFile = "{$name}.{$extension}";
+
+            // Faz o upload:
+
+            $upload = $request->anexo->storeAs($folderPath, $nameFile);
+            //Storage::put($folderPath. $nameFile,$upload);
+
+            $pergunta->anexo = $folderPath . $nameFile;
+        }
+
 
         $pergunta->save();
 
-        return response()->json($pergunta);
+        if ($pergunta instanceof Model) {
+
+            Request::session()->flash('sucesso', "Pergunta editada com sucesso.");
+            return back();
+
+        } else {
+            Request::session()->flash('erro', "Ocorreu um erro, tente novamente.");
+
+            return back();
+        }
+
+
     }
 
 
@@ -99,18 +136,76 @@ class PerguntaController extends Controller
     }
 
 
+    public function inativa($id)
+    {
+        $pergunta = Perguntas::find($id);
+        $pergunta->status = 'Inativa';
+        $pergunta->save();
+
+        return response()->json('ok');
+    }
+
+    public function ativa($id)
+    {
+        $pergunta = Perguntas::find($id);
+        $pergunta->status = 'Ativo';
+        $pergunta->save();
+
+        return response()->json('ok');
+    }
+
+    public function remove($id)
+    {
+        $pergunta = Perguntas::find($id);
+        $respostas = Respostas::where('pergunta_id',$id)->get();
+        foreach ($respostas as $resposta){
+            $resposta->delete();
+        }
+        Storage::delete($pergunta->anexo);
+        $pergunta->delete();
+
+        return response()->json('ok');
+    }
+
     public function getData()
     {
         $pergunta = Perguntas::all();
 
         return datatables()->of($pergunta)->addColumn('action', function ($query) {
-            return '<div class="text-center"> 
+
+            if($query->status == 'Ativo'){
+                return '<div class="text-center"> 
                        
                         <a href="#" class="link-simples " id="edita_'.$query->id.'" onclick="editaPergunta('.$query->id.')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
                             <i class="fa fa-edit separaicon " data-toggle="tooltip" data-placement="top" title="Editar Pergunta"></i>
                         </a>
+                        
+                        <a href="#" class="link-simples " id="remove_'.$query->id.'" onclick="removePergunta('.$query->id.')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
+                            <i class="fa fa-trash separaicon " data-toggle="tooltip" data-placement="top" title="Remover Pergunta"></i>
+                        </a>
+                        
+                        <a href="#" class="link-simples " id="inativa_'.$query->id.'" onclick="inativaPergunta('.$query->id.')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
+                            <i class="fa fa-ban separaicon " data-toggle="tooltip" data-placement="top" title="Inativar Pergunta"></i>
+                        </a>
              
                     </div>';
+            } else {
+                return '<div class="text-center"> 
+                       
+                        <a href="#" class="link-simples " id="edita_'.$query->id.'" onclick="editaPergunta('.$query->id.')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
+                            <i class="fa fa-edit separaicon " data-toggle="tooltip" data-placement="top" title="Editar Pergunta"></i>
+                        </a>
+                        
+                        <a href="#" class="link-simples " id="remove_'.$query->id.'" onclick="removePergunta('.$query->id.')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
+                            <i class="fa fa-trash separaicon " data-toggle="tooltip" data-placement="top" title="Remover Pergunta"></i>
+                        </a>
+                        
+                        <a href="#" class="link-simples " id="ativar_'.$query->id.'" onclick="ativarPergunta('.$query->id.')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
+                            <i class="fa fa-mail-reply separaicon " data-toggle="tooltip" data-placement="top" title="Ativar Pergunta"></i>
+                        </a>
+             
+                    </div>';
+            }
         })->make(true);
     }
 

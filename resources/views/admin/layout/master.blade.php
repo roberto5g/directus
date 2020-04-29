@@ -48,6 +48,7 @@
 @include('admin.core.scripts')
 @yield('myscript')
 <script type="text/javascript">
+
     $('.documento_comprobatorio').fileinput({
         theme: 'fa',
         uploadUrl: "/",

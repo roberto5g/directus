@@ -28,7 +28,7 @@ class HomeController extends Controller
     public function index()
     {
         $user_id = Auth::user()->id;
-        $resutado = Perguntas::with(['respostas' => function ($query) use ($user_id) {
+        $resutado = Perguntas::where('status','Ativo')->with(['respostas' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         }])->get();
         $perguntas = [];
