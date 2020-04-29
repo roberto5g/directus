@@ -192,7 +192,6 @@
         $('.responder').on('click', function (e) {
             //e.preventDefault();
             let id = $(this).attr('id');
-            console.log($(this).attr('id'));
             $('#form_resposta_'+id).validate({
                 onkeyup: function (element) {
                     $(element).valid();

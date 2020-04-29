@@ -167,6 +167,19 @@ class PerguntaController extends Controller
         return response()->json('ok');
     }
 
+
+    public function detalhes($id)
+    {
+        $pergunta = Perguntas::where('id',$id)
+            ->with(['respostas' => function($respostas){
+                $respostas->with(['users' => function($user) {
+                    $user->with('om');
+                }]);
+            }])->get();
+        return response()->json($pergunta);
+    }
+
+
     public function getData()
     {
         $pergunta = Perguntas::all();
@@ -206,6 +219,28 @@ class PerguntaController extends Controller
              
                     </div>';
             }
+        })->make(true);
+    }
+
+    public function listaData()
+    {
+        $pergunta = Perguntas::with(['user' => function($user){
+            $user->with('om');
+        }])->get();
+
+       // return response()->json($pergunta);
+
+        return datatables()->of($pergunta)->addColumn('action', function ($query) {
+
+
+                return '<div class="text-center"> 
+                       
+                        <h6><a href="#" class="badge badge-secondary" id="detalhes_'.$query->id.'" onclick="detalhesPergunta('.$query->id.')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
+                            <i class="fa fa-search separaicon " data-toggle="tooltip" data-placement="top" title="Detalhes Pergunta"></i>
+                        </a></h6>
+                    
+                    </div>';
+
         })->make(true);
     }
 

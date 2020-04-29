@@ -45,7 +45,8 @@ class HomeController extends Controller
         }
 
         if (Auth::user()->tipo == 'administrador') {
-            return view('admin.dashboard');
+            $oms = Om::all();
+            return view('admin.dashboard',compact('oms'));
         } else {
             return view('usuarios.dashboard', compact('perguntas'));
         }
