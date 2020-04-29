@@ -28,24 +28,21 @@ class HomeController extends Controller
     public function index()
     {
         $user_id = Auth::user()->id;
-        $perguntas = Perguntas::with(['respostas' => function($query) use ($user_id) {
-            $query->where('user_id','<>',$user_id);
+        $resutado = Perguntas::with(['respostas' => function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
         }])->get();
-        //dd($perguntas);
-/*
         $perguntas = [];
-        foreach ($resultados as $pergunta){
-            if($pergunta->respostas){
-                foreach ($pergunta->respostas as $respostas){
-                    if($respostas->user_id != $user_id){
-                        $perguntas[] = $respostas;
+        foreach ($resutado as $per) {
+            if (count($per->respostas)) {
+                foreach ($per->respostas as $res) {
+                    if ($res->user_id != $user_id) {
+                        $perguntas[] = $per;
                     }
                 }
-
+            } else {
+                $perguntas[] = $per;
             }
-        }*/
-
-        return response()->json($perguntas);
+        }
 
         if (Auth::user()->tipo == 'administrador') {
             return view('admin.dashboard');

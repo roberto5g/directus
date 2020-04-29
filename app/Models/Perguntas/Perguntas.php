@@ -4,14 +4,13 @@ namespace App\Models\Perguntas;
 
 
 use App\Models\Respostas\Respostas;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Perguntas extends Model
 {
     protected
         $table = 'perguntas';
-
-    public $timestamps = false;
 
     protected
         $fillable = [
@@ -23,6 +22,12 @@ class Perguntas extends Model
 
     protected
         $guarded = ['id'];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     public function respostas()
     {

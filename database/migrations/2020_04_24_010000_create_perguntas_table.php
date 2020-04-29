@@ -19,6 +19,7 @@ class CreatePerguntasTable extends Migration
             $table->string('anexo')->nullable();
             $table->integer('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
         });
     }
     /**

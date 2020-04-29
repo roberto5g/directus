@@ -28,8 +28,8 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-
-                                        <label for="pergunta_{{$pergunta->id}}">{{$pergunta->descricao}}</label>
+                                        <label><b>Origem: </b>{{$pergunta->user->om->sigla}}</label><br>
+                                        <label for="pergunta_{{$pergunta->id}}"><b>Pergunta:</b> {{$pergunta->descricao}}</label>
                                         <textarea name="resposta" class="form-control" id="pergunta_{{$pergunta->id}}"
                                                   type="text" rows="5" cols="30" dir="ltr"
                                                   placeholder="Informe sua resposta" required></textarea>
@@ -68,7 +68,7 @@
 
                             <div class="row">
                                 <div class="col">
-                                    <button class="btn btn-block btn-success">
+                                    <button class="btn btn-block btn-success responder" id="{{$pergunta->id}}">
                                         Responder
                                     </button>
                                 </div>
@@ -100,17 +100,19 @@
                     <h6><i class="fa fa-book"></i>
 
                         <span class="audiowide">
-                            Levantamentos enviados
+                            Perguntas respondidas
                         </span></h6>
                 </div>
 
                 <div class="table-responsive">
-                    <table id="levamtamento_table"
+                    <table id="perguntas_table"
                            class="table table-sm table-hover table-bordered table-striped dataTable no-footer">
                         <thead>
                         <tr>
-                            <th class="text-center">Período Inicial</th>
-                            <th class="text-center">Período Final</th>
+                            <th class="text-center">Om</th>
+                            <th class="text-center">Descrição</th>
+                            <th class="text-center">Data pergunta</th>
+                            <th class="text-center">Data resposta</th>
                             <th class="text-center">Ação</th>
                         </tr>
                         </thead>
@@ -127,7 +129,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalDetalheTitle">Detalhe Levantamento</h5>
+                    <h5 class="modal-title" id="ModalDetalheTitle">Detalhe pergunta - resposta</h5>
                     <button type="button" class="close" data-dismiss="modal"
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -141,88 +143,27 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
+                                    <label><b>Origem: </b><span id="om"></span></label><br>
+                                    <label for="pergunta"><b>Pergunta:</b> <span id="pergunta"></span></label>
+                                    <textarea name="resposta" class="form-control" id="resposta"
+                                              type="text" rows="5" cols="30" dir="ltr"
+                                              readonly></textarea>
 
-                                    <label for="confirmado">1 - Quantidade de servidores com confirmação de diagnóstico
-                                        de
-                                        infecção por COVID-19.</label>
-                                    <input type="text" class="form-control quantidade" id="confirmado_"
-                                           readonly>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
+                        <div id="anexos">
+                            <div class="row">
+                                <div class="col" id="anexo_pergunta">
+                                    <label><b>Anexo referente a pergunta: </b></label> <a id="link_pergunta" href="" target="_blank"><i
+                                                class="fa fa-file-text"></i> Anexo Pergunta</a>
 
-                                    <label for="responsaveis">2 - Quantidade de servidores responsáveis pelo cuidado de
-                                        uma
-                                        ou
-                                        mais pessoas com suspeita ou confirmação de diagnóstico de infecção por
-                                        COVID-19.</label>
-                                    <input type="text" class="form-control quantidade" id="responsaveis_"
-                                           readonly>
                                 </div>
-                            </div>
-                        </div>
+                                <div class="col" id="anexo_resposta">
+                                    <label><b>Anexo referente a resposta: </b></label> <a id="link_resposta" href="" target="_blank"><i
+                                                class="fa fa-file-text"></i> Anexo Resposta</a>
 
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-
-                                    <label for="idosos">3 - Quantidade de servidores com 60 (sessenta) anos ou
-                                        mais.</label>
-                                    <input type="text" class="form-control quantidade" id="idosos_" readonly>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-
-                                    <label for="imunodeficiente">4 - Quantidade de servidores imunodeficientes ou com
-                                        doenças
-                                        preexistentes crônicas ou graves.</label>
-                                    <input type="text" class="form-control quantidade" id="imunodeficiente_" readonly>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-
-                                    <label for="gestantes">5 - Quantidade de servidoras gestantes ou lactantes.</label>
-                                    <input type="text" class="form-control quantidade" id="gestantes_" readonly>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-
-                                    <label for="idade_escolar">6 - Quantidade de servidores com filhos em idade escolar
-                                        ou
-                                        inferiror
-                                        e que necessitam de assistência.</label>
-                                    <input type="text" class="form-control quantidade" id="idade_escolar_" readonly>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-
-                                    <label for="nao_presentes">7 - Quantidade de servidores não presentes por outras
-                                        medidas
-                                        de
-                                        proteção para o enfrentamento da emergência de saúde pública decorrente do
-                                        coronavírus
-                                        (COVID-19).</label>
-                                    <input type="text" class="form-control quantidade" id="nao_presentes_" readonly>
                                 </div>
                             </div>
                         </div>
@@ -248,123 +189,105 @@
 
     <script>
 
+        $('.responder').on('click', function (e) {
+            //e.preventDefault();
+            let id = $(this).attr('id');
+            console.log($(this).attr('id'));
+            $('#form_resposta_'+id).validate({
+                onkeyup: function (element) {
+                    $(element).valid();
+                },
+                errorClass: "error",
+                rules: {
+                    resposta: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    resposta: {
+                        required: "Informe uma resposta",
+                    },
+                },
+            });
+        });
+
         function detalhes(id) {
             $('#ModalDetalhe').modal('show');
-            $('#confirmado_').val($('#detalhes_' + id).data('confirmado'));
-            $('#responsaveis_').val($('#detalhes_' + id).data('responsaveis'));
-            $('#idosos_').val($('#detalhes_' + id).data('idosos'));
-            $('#imunodeficiente_').val($('#detalhes_' + id).data('imunodeficiente'));
-            $('#gestantes_').val($('#detalhes_' + id).data('gestantes'));
-            $('#idade_escolar_').val($('#detalhes_' + id).data('idade_escolar'));
-            $('#nao_presentes_').val($('#detalhes_' + id).data('nao_presentes'));
+            $('#om').text($('#detalhes_' + id).data('om'));
+            $('#pergunta').text($('#detalhes_' + id).data('pergunta'));
+            $('#resposta').val($('#detalhes_' + id).data('resposta'));
+            let anexo_pergunta = $('#detalhes_' + id).data('anexo_pergunta');
+            let anexo_resposta = $('#detalhes_' + id).data('anexo_resposta');
+
+            if(anexo_pergunta == ''){
+                $('#anexo_pergunta').removeClass('enable').addClass('disable');
+            } else {
+                $('#link_pergunta').attr("href", "/storage/"+anexo_pergunta);
+                $('#anexo_pergunta').removeClass('disable').addClass('enable');
+            }
+            if(anexo_resposta == ''){
+                $('#anexo_resposta').removeClass('enable').addClass('disable');
+            } else {
+                $('#link_resposta').attr("href", "/storage/"+anexo_resposta);
+                $('#anexo_resposta').removeClass('disable').addClass('enable');
+            }
+
 
         }
 
-        $('#levamtamento_tasble').DataTable({
+        $('#perguntas_table').DataTable({
             "processing": true,
             "serverSide": true,
             "autoWidth": false,
-            "ajax": "/usuario/lista/levantamento",
+            "ajax": "/usuario/lista/respostas",
             'order': [0, 'desc'],
             'columnDefs': [
                 {
-                    "targets": [0, 1, 2], // your case first column
+                    "targets": [0, 1, 2,3,4], // your case first column
                     "className": "text-center",
                 },
                 {
-                    "width": "45%", "targets": 0
+                    "width": "20%", "targets": 0
                 },
                 {
-                    "width": "45%", "targets": 1
+                    "width": "40%", "targets": 1
                 },
                 {
                     "width": "10%", "targets": 2
                 },
                 {
-                    "targets": 0, render: function (data) {
+                    "width": "10%", "targets": 3
+                },
+                {
+                    "width": "10%", "targets": 4
+                },
+                {
+                    "targets": 2, render: function (data) {
                         return moment(data).format('DD/MM/YYYY');
                     }
                 },
                 {
-                    "targets": 1, render: function (data) {
+                    "targets": 3, render: function (data) {
                         return moment(data).format('DD/MM/YYYY');
                     }
                 },
                 {
-                    "targets": [2],
+                    "targets": [4],
                     "orderable": false
                 },
             ],
 
             "columns": [
-                {"data": "pergunta.inicio"},
-                {"data": "pergunta.fim"},
+                {"data": "perguntas.user.om.sigla"},
+                {"data": "perguntas.descricao"},
+                {"data": "perguntas.created_at"},
+                {"data": "perguntas.created_at"},
                 {"data": "action"},
             ]
         });
 
-        if ($('#status').val() == 'false' || $('#pergunta').val() == 0) {
-            $('.formulario').addClass('disable');
-            $('#aviso').addClass('enable');
-        } else {
-            $('.formulario').removeClass('disable').addClass('enable');
-            $('#aviso').removeClass('enable').addClass('disable');
-        }
-
-        $('#form_cadastrar_levantamento').validate({
-            onkeyup: function (element) {
-                $(element).valid();
-            },
-            errorClass: "error",
-            rules: {
-                confirmado: {
-                    required: true,
-                },
-                responsaveis: {
-                    required: true,
-                },
-                idosos: {
-                    required: true,
-                },
-                imunodeficiente: {
-                    required: true,
-                },
-                gestantes: {
-                    required: true,
-                },
-                idade_escolar: {
-                    required: true,
-                },
-                nao_presentes: {
-                    required: true,
-                },
 
 
-            },
-            messages: {
-                confirmado: {
-                    required: "Informe um valor",
-                },
-                responsaveis: {
-                    required: "Informe um valor",
-                },
-                idosos: {
-                    required: "Informe um valor",
-                },
-                imunodeficiente: {
-                    required: "Informe um valor",
-                },
-                gestantes: {
-                    required: "Informe um valor",
-                },
-                idade_escolar: {
-                    required: "Informe um valor",
-                },
-                nao_presentes: {
-                    required: "Informe um valor",
-                },
-            },
-        });
 
     </script>
 

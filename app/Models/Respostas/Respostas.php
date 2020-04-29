@@ -25,7 +25,7 @@ class Respostas extends Model
 
     public function perguntas()
     {
-        return $this->belongsTo(Perguntas::class, 'pegunta_id');
+        return $this->belongsTo(Perguntas::class,'pergunta_id');
     }
 
     public function users()

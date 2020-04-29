@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
 
     //respostas
     Route::post('/responde/pergunta/{id}', 'Respostas\RespostasController@cadastra');
-    Route::get('/usuario/lista/levantamento', 'Respostas\LevantamentoController@getData');
+    Route::get('/usuario/lista/respostas', 'Respostas\RespostasController@getData');
 
 });
 // Section Pages

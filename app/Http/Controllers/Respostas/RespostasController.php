@@ -80,26 +80,24 @@ class RespostasController extends Controller
 
     public function getData()
     {
-        $retorno = [];
-        $levantamentos = Respostas::where('user_id',Auth::user()->id)->with('pergunta')->get();
 
-        foreach ($levantamentos as $levantamento){
-            $levantamento->periodo->fim = date('Y-m-d',strtotime("-1 day", strtotime($levantamento->periodo->fim)));
-            $retorno[] = $levantamento;
-        }
+        $respostas = Respostas::where('user_id',Auth::user()->id)
+            ->with(['perguntas' => function($query){
+                $query->with(['user' => function($user) {
+                    $user->with('om');
+                }]);
+            }])->get();
 
 
-        return datatables()->of($retorno)->addColumn('action', function ($query) {
+        return datatables()->of($respostas)->addColumn('action', function ($query) {
             return '<div class="text-center"> 
                        
                         <a href="#" class="link-simples " id="detalhes_'.$query->id.'" onclick="detalhes('.$query->id.')"  
-                            data-confirmado="' . $query->confirmado . '" 
-                            data-responsaveis="' . $query->responsaveis . '" 
-                            data-idosos="' . $query->idosos . '" 
-                            data-imunodeficiente="' . $query->imunodeficiente . '" 
-                            data-gestantes="' . $query->gestantes . '" 
-                            data-idade_escolar="' . $query->idade_escolar . '" 
-                            data-nao_presentes="' . $query->nao_presentes . '" 
+                            data-pergunta="' . $query->perguntas->descricao . '" 
+                            data-om="' . $query->perguntas->user->om->sigla . '" 
+                            data-resposta="' . $query->resposta . '" 
+                            data-anexo_pergunta="' . $query->perguntas->anexo . '" 
+                            data-anexo_resposta="' . $query->anexo_resposta . '" 
                             data-toggle="modal">
                             <i class="fa fa-search separaicon " data-toggle="tooltip" data-placement="top" title="Detalhes"></i>
                         </a>
