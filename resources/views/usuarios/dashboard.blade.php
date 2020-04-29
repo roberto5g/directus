@@ -1,6 +1,11 @@
 @extends('admin.layout.master')
 @section('content')
-
+    @if (Request::session()->has('sucesso'))
+        <span id="sucesso" class="disable">{!! Request::session()->get('sucesso')!!}</span>
+    @endif
+    @if(Request::session()->has('error'))
+        <span id="error" class="disable">{!! Request::session()->get('error')!!}</span>
+    @endif
     <div class="container-fluid">
         <div class="animated fadeIn">
             <div class="text-center">
@@ -15,31 +20,55 @@
 
             @if($perguntas)
                 @foreach($perguntas as $pergunta)
-                    <div class="alert alert-simples">
+
+                    <div class="alert alert-secondary">
                         <form id="form_resposta_{{$pergunta->id}}" action="/responde/pergunta/{{$pergunta->id}}"
-                              method="POST">
+                              method="POST" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
 
                                         <label for="pergunta_{{$pergunta->id}}">{{$pergunta->descricao}}</label>
-                                        <input type="text" class="form-control" id="pergunta_{{$pergunta->id}}"
-                                               aria-describedby="confirmadoHelp" name="resposta"
-                                               placeholder="resposta" required>
+                                        <textarea name="resposta" class="form-control" id="pergunta_{{$pergunta->id}}"
+                                                  type="text" rows="5" cols="30" dir="ltr"
+                                                  placeholder="Informe sua resposta" required></textarea>
+
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="alert alert-secondary">
-                                         <a href="/storage/{{$pergunta->anexo}}" target="_blank"><i class="fa fa-search"></i> Anexo</a>
+                            @if($pergunta->anexo)
+                                <div class="row">
+                                    <div class="col">
+                                        <label><b>Anexo referente a pergunta</b></label> <a href="/storage/{{$pergunta->anexo}}" target="_blank"><i
+                                                    class="fa fa-file-text"></i> Anexo</a>
+
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="alert alert-dark">
+                                <h6>
+                                    <span class="audiowide">Inserir documento em anexo</span>
+                                </h6>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group main-section">
+                                            <div class="file-loading">
+                                                <input id="anexo_{{$pergunta->id}}" type="file"
+                                                       name="anexo_resposta" class="file documento_comprobatorio"
+                                                       data-browse-on-zone-click="false"
+                                                       data-overwrite-initial="false"
+                                                       data-min-file-count="2"
+                                                       data-show-preview="false">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col">
-                                    <button class="btn btn-block btn-primary">
+                                    <button class="btn btn-block btn-success">
                                         Responder
                                     </button>
                                 </div>
@@ -48,7 +77,7 @@
                     </div>
                 @endforeach
 
-                @else
+            @else
                 <div class="alert alert-success">
                     <div class="row">
                         <div class="col">

@@ -1,3 +1,3 @@
-# SIR
-Sistema de Informações da Reserva
+# SIRESP
+Sistema de perguntas e respostas
 

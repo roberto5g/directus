@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/select2-bootstrap4.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/fullcalendar.min.css') }}"/>
-
+    <link rel="stylesheet" href="{{ asset('css/fileinput.css') }}"/>
 
 </head>
 
@@ -48,6 +48,17 @@
 @include('admin.core.scripts')
 @yield('myscript')
 <script type="text/javascript">
+    $('.documento_comprobatorio').fileinput({
+        theme: 'fa',
+        uploadUrl: "/",
+        required: true,
+        dropZoneEnabled: false,
+        allowedFileExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+        overwriteInitial: false,
+        maxFileSize: 2000,
+        maxFilesNum: 10
+    });
+
     if ($('#sucesso').text()) {
         toastr.success($('#sucesso').text() + '!', 'Sucesso!', {timeOut: 3000});
     } else if ($('#error').text()) {

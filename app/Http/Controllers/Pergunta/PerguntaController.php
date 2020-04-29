@@ -31,7 +31,7 @@ class PerguntaController extends Controller
 
         if ($request->hasFile('anexo') && $request->file('anexo')->isValid()) {
 
-            $folderPath = 'arquivos/perguntas/' . Auth::user()->id . '/anexo/';
+            $folderPath = 'arquivos/perguntas/anexo/';
 
             // Define um aleatório para o arquivo baseado no timestamps atual
             $name = uniqid(date('HisYmd'));

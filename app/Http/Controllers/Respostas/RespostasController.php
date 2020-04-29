@@ -4,43 +4,56 @@ namespace App\Http\Controllers\Respostas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Respostas\Respostas;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request as FormRequest;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Database\Eloquent\Model;
+use Request;
 
 class RespostasController extends Controller
 {
 
 
-    public function cadastra(Request $request,$id)
+    public function cadastra(FormRequest $request,$id)
     {
 
-        /*$pizza  = "piece1 piece2 piece3 piece4 piece5 piece6";
-        $pieces = explode(" ", $pizza);
-        echo $pieces[0]; // piece1
-        echo $pieces[1]; // piece2*/
+        $resposta = new Respostas();
+        $resposta->resposta = $request['resposta'];
+        $resposta->pergunta_id = $id;
+        $resposta->user_id = Auth::user()->id;
 
 
-        $resposta = Respostas::create([
-            'resposta' => $request['resposta'],
-            'pergunta_id' => $id,
-            'user_id' => Auth::user()->id
-        ]);
 
-        //dd($request->all());
+        if ($request->hasFile('anexo_resposta') && $request->file('anexo_resposta')->isValid()) {
 
-        /*$levantamento = Respostas::create([
-            'confirmado' => $request['confirmado'],
-            'responsaveis' => $request['responsaveis'],
-            'idosos' => $request['idosos'],
-            'imunodeficiente' => $request['imunodeficiente'],
-            'gestantes' => $request['gestantes'],
-            'idade_escolar' => $request['idade_escolar'],
-            'nao_presentes' => $request['nao_presentes'],
-            'user_id' => Auth::user()->id,
-            'periodo_id' => $request['pergunta'],
-        ]);*/
-        return back();
+            $folderPath = 'arquivos/perguntas/resposta/anexo/';
+
+            // Define um aleatório para o arquivo baseado no timestamps atual
+            $name = uniqid(date('HisYmd'));
+
+            // Recupera a extensão do arquivo
+            $extension = $request->anexo_resposta->extension();
+
+            // Define finalmente o nome
+            $nameFile = "{$name}.{$extension}";
+
+            // Faz o upload:
+            $upload = $request->anexo_resposta->storeAs($folderPath, $nameFile);
+            $resposta->anexo_resposta = $folderPath . $nameFile;
+        }
+
+        $resposta->save();
+
+        if ($resposta instanceof Model) {
+
+            Request::session()->flash('sucesso', "Resposta enviada com sucesso.");
+            return back();
+
+        } else {
+            Request::session()->flash('erro', "Ocorreu um erro, tente novamente.");
+
+            return back();
+        }
+
     }
 
 

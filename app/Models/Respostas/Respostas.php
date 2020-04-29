@@ -17,6 +17,7 @@ class Respostas extends Model
         'resposta',
         'user_id',
         'pergunta_id',
+        'anexo_resposta'
     ];
 
     protected

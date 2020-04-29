@@ -27,7 +27,25 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $perguntas = Perguntas::all();
+        $user_id = Auth::user()->id;
+        $perguntas = Perguntas::with(['respostas' => function($query) use ($user_id) {
+            $query->where('user_id','<>',$user_id);
+        }])->get();
+        //dd($perguntas);
+/*
+        $perguntas = [];
+        foreach ($resultados as $pergunta){
+            if($pergunta->respostas){
+                foreach ($pergunta->respostas as $respostas){
+                    if($respostas->user_id != $user_id){
+                        $perguntas[] = $respostas;
+                    }
+                }
+
+            }
+        }*/
+
+        return response()->json($perguntas);
 
         if (Auth::user()->tipo == 'administrador') {
             return view('admin.dashboard');

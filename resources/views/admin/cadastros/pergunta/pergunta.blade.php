@@ -42,9 +42,12 @@
                                     <div class="col">
                                         <div class="form-group main-section">
                                             <div class="file-loading">
-                                                <input id="anexo"
-                                                       type="file"
-                                                       name="anexo">
+                                                <input id="anexo" type="file"
+                                                       name="anexo" class="file documento_comprobatorio"
+                                                       data-browse-on-zone-click="false"
+                                                       data-overwrite-initial="false"
+                                                       data-min-file-count="2"
+                                                       data-show-preview="false">
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +203,7 @@
                 {
                     "targets": 1, render: function (data) {
                         if(data){
-                            return '<a href="/storage/'+data+'" target="_blank" class="vermelho"><i class="fa fa-search"> anexo</i></a>';
+                            return '<h6><a href="/storage/'+data+'" target="_blank" class="vermelho"><i class="fa fa-clipboard"> anexo</i></a></h6>';
                         } else {
                             return '-';
                         }
@@ -336,15 +339,6 @@
             });
         }
 
-        $('.documento_comprobatorio').fileinput({
-            theme: 'fa',
-            uploadUrl: "/",
-            required: true,
-            dropZoneEnabled: false,
-            allowedFileExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
-            overwriteInitial: false,
-            maxFileSize: 2000,
-            maxFilesNum: 10
-        });
+
     </script>
 @endsection
