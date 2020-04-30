@@ -13,7 +13,7 @@
 
     <ul class="nav navbar-nav d-md-down-none">
         <li class="nav-item px-3">
-            <a class="nav-link" href="/">Siresp 12ªRM -  {{ auth()->user()->om->sigla }}</a>
+            <a class="nav-link" href="/">Directus 12ªRM -  {{ auth()->user()->om->sigla }}</a>
         </li>
 
     </ul>

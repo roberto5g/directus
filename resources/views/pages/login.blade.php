@@ -46,7 +46,7 @@
                     {{--cabeçalho--}}
                     <div class="row">
                         <div class="col text-center">
-                            <h4>Siresp 12ª RM</h4>
+                            <h4>Directus 12ª RM</h4>
                         </div>
                     </div>
 

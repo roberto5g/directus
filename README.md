@@ -1,3 +1,3 @@
-# SIRESP
+# DIRECTUS
 Sistema de perguntas e respostas
 
