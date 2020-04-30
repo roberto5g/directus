@@ -85,8 +85,49 @@
 
                                         </tbody>
                                     </table>
-
                                 </div>
+                                <div class="espacobaixo5"></div>
+                                <div class="alert alert-simples">
+                                    <div class="form-group">
+                                        <div class="text-center">
+                                            <h3>
+                                                <i class="fa fa-book"></i> <span
+                                                        class="audiowide">Emissão de Relatório por pergunta</span>
+                                            </h3>
+                                        </div>
+
+                                        {{--botões de geração de relatório--}}
+                                        <div class="row">
+                                            <div class="col">
+                                                <form action="/admin/gera/relatorio/om/sem/resposta/pergunta"
+                                                      method="get">
+                                                    <input type="hidden" class="pergunta_id" name="pergunta_id">
+
+
+                                                    <button type="submit" class="btn btn-secondary btn-block gera_pdf"
+                                                            data-target="_black" name="pdf" value="pdf">
+                                                        <i class="fa fa-download"> </i>
+                                                        Download PDF (Oms que não responderam)
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <div class="col">
+                                                <form action="/admin/gera/relatorio/geral/pergunta" method="get">
+                                                    <input type="hidden" class="pergunta_id" name="pergunta_id">
+
+
+                                                    <button type="submit" class="btn btn-success btn-block gera_pdf"
+                                                            data-target="_black" name="pdf" value="pdf">
+                                                        <i class="fa fa-download"> </i>
+                                                        Download PDF (Geral)
+                                                    </button>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="row">
@@ -126,15 +167,12 @@
 
         function detalhesPergunta(id) {
             $('#ModalDetalhe').modal('show');
+            $('.pergunta_id').val(id);
 
             $('#perguntas_table_modal').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "autoWidth": false,
-                dom: 'Bfrtip',
-                buttons: [
-                    'pdf', 'print'
-                ],
                 "ajax": "admin/gerencia/lista/pergunta/" + id,
                 'order': [0, 'desc'],
                 'columnDefs': [

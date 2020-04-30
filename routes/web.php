@@ -63,6 +63,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/responde/pergunta/{id}', 'Respostas\RespostasController@cadastra');
     Route::get('/usuario/lista/respostas', 'Respostas\RespostasController@getData');
 
+
+    //relatorios
+    Route::get('/admin/gera/relatorio/om/sem/resposta/pergunta', 'Relatorio\RelatorioController@relatorio_om_sem_resposta');
+    Route::get('/admin/gera/relatorio/geral/pergunta', 'Relatorio\RelatorioController@relatorio_geral');
+
 });
 // Section Pages
 Route::view('/errors/400', 'errors.400');
