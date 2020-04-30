@@ -59,31 +59,20 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table id="perguntas_table"
+                            <table id="perguntas_table_modal"
                                    class="table table-sm table-hover table-bordered table-striped no-footer">
                                 <thead>
                                 <tr>
-                                    <th class="text-center alinha" style="width:15%;">OM</th>
-                                    <th class="text-center alinha" style="width:70%;">Resposta
-                                    <th class="text-center alinha" style="width:5%;">Data resposta
+                                    <th class="text-center">OM</th>
+                                    <th class="text-center">Resposta
+                                    <th class="text-center">Data resposta
                                     </th>
-                                    <th class="text-center alinha" style="width:10%;">Anexo
+                                    <th class="text-center">Anexo
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                @for($i = 0; $i < count($oms); $i++)
-
-                                    <tr>
-                                        <th scope="row" class="alinha">{{$oms[$i]->sigla}}</th>
-                                        <td scope="col" class="text-left tabela_valor tab_resposta" id="resposta_{{$oms[$i]->id}}"></td>
-                                        <td scope="col" class="text-left tabela_valor tab_data" id="data_{{$oms[$i]->id}}"></td>
-                                        <td scope="col" class="text-center tabela_valor tab_anexo alinha" id="anexo_{{$oms[$i]->id}}"></td>
-
-                                    </tr>
-
-                                @endfor
                                 </tbody>
                             </table>
 
@@ -148,6 +137,61 @@
 
         function detalhesPergunta(id) {
             $('#ModalDetalhe').modal('show');
+
+
+            $('#perguntas_table_modal').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "autoWidth": false,
+                "ajax": "admin/gerencia/lista/pergunta/"+id,
+                'order': [0, 'desc'],
+                'columnDefs': [
+                    {
+                        "targets": [0, 1, 2, 3, 4], // your case first column
+                        "className": "text-center",
+                    },
+                    {
+                        "width": "20%", "targets": 0
+                    },
+                    {
+                        "width": "40%", "targets": 1
+                    },
+                    {
+                        "width": "10%", "targets": 2
+                    },
+                    {
+                        "targets": 2, render: function (data) {
+                            return moment(data).format('DD/MM/YYYY');
+                        }
+                    },
+                    {
+                        "targets": 3, render: function (data) {
+                            if (data == 'Ativo') {
+                                return '<h6><span class="badge badge-success">' + data + '</span></h6>';
+                            } else {
+                                return '<h6><span class="badge badge-warning">' + data + '</span></h6>';
+                            }
+
+                        }
+                    },
+                    {
+                        "width": "10%", "targets": 4
+                    },
+                    {
+                        "targets": 4,
+                        "orderable": false
+                    },
+                ],
+                "columns": [
+                    {"data": "user.om.sigla"},
+                    {"data": "descricao"},
+                    {"data": "created_at"},
+                    {"data": "status"},
+                    {"data": "action"},
+                ]
+            });
+
+
             $('#pergunta').text($('#detalhes_' + id).data('descricao'));
             $('#pergunta_tabela').text($('#detalhes_' + id).data('descricao'));
             $('.respostas_om').empty();
