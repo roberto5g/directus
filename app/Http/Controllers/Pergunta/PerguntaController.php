@@ -118,110 +118,50 @@ class PerguntaController extends Controller
 
         $oms = Om::all();
 
-
-        $respostas = Respostas::with(['perguntas' => function ($query) use ($id) {
-            $query->where('id', $id)->with(['user' => function ($user) {
-                $user->with('om');
-            }]);
-        }])->get();
-
-        $resultado = [];
-        foreach ($respostas as $resp) {
-            if ($resp->perguntas != null) {
-                $resultado[] = $resp;
-            }
-        }
-
-        $retorno = [];
-        foreach ($oms as $om) {
-
-            $item = new \stdClass();
-            foreach ($resultado as $resulta) {
-
-                if ($om->id == $resulta->perguntas->user->om->id) {
-
-                    $item->id = $resulta->perguntas->user->om->id;
-                    $item->nome = $resulta->perguntas->user->om->nome;
-                    $item->resposta = $resulta->resposta;
-                    //$item->data = date('d/m/Y HH:mm:ss', strtotime($perguntas[$j]->respostas[$x]->created_at));
-                    $item->anexo = $resulta->anexo_resposta;
-
-                } else {
-
-                    $item->id = $om->id;
-                    $item->nome = $om->sigla;
-                    $item->resposta = "Não informado";
-                    //$item->data = date('d/m/Y HH:mm:ss', strtotime($perguntas[$j]->respostas[$x]->created_at));
-                    $item->anexo = 'sem anexo';
-
-                }
-            }
-            $retorno[] = $item;
-
-        }
-
-        return response()->json([$oms,$resultado]);
-
-        /*$perguntas = Perguntas::where('id', $id)
+        $perguntas = Perguntas::where('id', $id)
             ->with(['respostas' => function ($respostas) {
                 $respostas->with(['users' => function ($users) {
                     $users->with('om');
                 }]);
-            }])->first();*/
+            }])->get();
 
+        $sem_resposta = [];
+        $array_om_id = [];
+        $com_resposta = [];
+        for ($j = 0; $j < count($perguntas); $j++) {
 
-        /*$retorno = [];
-        foreach ($perguntas->respostas as $resposta) {
-            if($resposta){
-                foreach ($oms as $om) {
-                    // $retorno = [];
-                    $item = new \stdClass();
-                    if ($om->id == $resposta->users->om->id) {
-                        $item->id = $resposta->users->om->id;
-                        $item->nome = $resposta->users->om->nome;
-                        $item->resposta = $resposta->resposta;
-                        //$item->data = date('d/m/Y HH:mm:ss', strtotime($perguntas[$j]->respostas[$x]->created_at));
-                        $item->anexo = $resposta->anexo_resposta;
-
-                    } else {
-                        $item->id = $om->id;
-                        $item->nome = $om->nome;
-                        $item->resposta = "Não informado";
-                        //$item->data = "--";
-                        $item->anexo = "Sem anexo";
-
-                    }
-                    $retorno[] = $item;
-                }
-            } else {
-                $retorno[] = "NADA";
+            for ($x = 0; $x < count($perguntas[$j]->respostas); $x++) {
+                $item = new \stdClass();
+                $item->id = $perguntas[$j]->respostas[$x]->users->om_id;
+                $item->sigla = $perguntas[$j]->respostas[$x]->users->om->sigla;
+                $item->resposta = $perguntas[$j]->respostas[$x]->resposta;
+                $item->data = date('d/m/Y h:m:s', strtotime($perguntas[$j]->respostas[$x]->created_at));
+                $item->anexo = $perguntas[$j]->respostas[$x]->anexo_resposta;
+                $com_resposta[] = $item;
+                $array_om_id[] = $perguntas[$j]->respostas[$x]->users->om_id;
             }
-        }*/
+        }
 
-        /*for($i = 0; $i < count($oms); $i++){
-            $item = new \stdClass();
-            for($j = 0; $j < count($perguntas); $j++){
-                for($x = 0; $x < count($perguntas[$j]->respostas); $x++){
-                    if($oms[$i]->id == $perguntas[$j]->respostas[$x]->users->om_id){
-                        $item->id = $perguntas[$j]->respostas[$x]->users->om->id;
-                        $item->nome = $perguntas[$j]->respostas[$x]->users->om->nome;
-                        $item->resposta = $perguntas[$j]->respostas[$x]->resposta;
-                        //$item->data = date('d/m/Y HH:mm:ss', strtotime($perguntas[$j]->respostas[$x]->created_at));
-                        $item->anexo = $perguntas[$j]->respostas[$x]->anexo_resposta;
+        for ($i = 0; $i < count($oms); $i++) {
 
-                    } else {
-                        $item->id = $oms[$i]->id;
-                        $item->nome = $oms[$i]->nome;
-                        $item->resposta = "Não informado";
-                        //$item->data = "--";
-                        $item->anexo = "Sem anexo";
-
-                    }
-
-                }
+            if (!in_array($oms[$i]->id, $array_om_id)) {
+                $item = new \stdClass();
+                $item->id = $oms[$i]->id;
+                $item->sigla = $oms[$i]->sigla;
+                $item->resposta = "Não informado";
+                $item->data = "--";
+                $item->anexo = null;
+                $sem_resposta[] = $item;
             }
-            $retorno[] = $item;
-        }*/
+
+        }
+
+        $retorno = array_merge($com_resposta,$sem_resposta);
+
+        //return response()->json([$com_resposta,$sem_resposta]);
+        //return response()->json($retorno);
+        return datatables()->of($retorno)->make(true);
+
 
 
     }
