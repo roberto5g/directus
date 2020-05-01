@@ -3373,6 +3373,21 @@ tbody.collapse.show {
 .alert-secondary .alert-link {
   color: #3e4548; }
 
+.alert-silver {
+  color: #b9c6cc;
+  background-color: #edf1f3;
+  border-color: #e6ebee; }
+.alert-silver hr {
+  border-top-color: #d7dfe4; }
+.alert-silver label {
+  color: #0b0e0f;
+  border-top-color: #d7dfe4; }
+.alert-silver span {
+  color: #0b0e0f;
+  border-top-color: #d7dfe4; }
+.alert-silver .alert-link {
+  color: #3e4548; }
+
 .alert-success {
   color: #28623c;
   background-color: #dbf2e3;

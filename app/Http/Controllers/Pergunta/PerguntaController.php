@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pergunta;
 
 use App\Http\Controllers\Controller;
+use App\Models\Perguntas\OmPerguntas;
 use App\Models\Respostas\Respostas;
 use App\Models\Om\Om;
 use App\Models\Perguntas\Perguntas;
@@ -17,15 +18,13 @@ class PerguntaController extends Controller
 
     public function index()
     {
-
         return view('admin.cadastros.pergunta.pergunta');
     }
 
     public function cadastra(FormRequest $request)
     {
 
-        //return response()->json($request->all());
-
+        //dd($request->all());
         $pergunta = new Perguntas();
         $pergunta->descricao = $request['descricao'];
         $pergunta->user_id = auth()->user()->id;
@@ -50,6 +49,7 @@ class PerguntaController extends Controller
 
         $pergunta->save();
 
+        $pergunta->om()->attach($request['om_pergunta']);
 
         if ($pergunta instanceof Model) {
 
@@ -67,10 +67,8 @@ class PerguntaController extends Controller
     public function edita(FormRequest $request)
     {
 
-
         $pergunta = Perguntas::find($request['pergunta_id']);
         $pergunta->descricao = $request['descricao'];
-        //$pergunta->anexo = $request['anexo'];
 
         if ($request->hasFile('anexo') && $request->file('anexo')->isValid()) {
 
@@ -97,6 +95,8 @@ class PerguntaController extends Controller
 
 
         $pergunta->save();
+
+        $pergunta->om()->sync($request['om_pergunta']);
 
         if ($pergunta instanceof Model) {
 

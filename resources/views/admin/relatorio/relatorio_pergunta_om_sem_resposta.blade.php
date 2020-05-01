@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Relatório de Oms que não responderam a pergunta</title>
+    <title>Relatório de OM que não respondeu a pergunta</title>
     <style type="text/css">
         @page {
             margin: 90px 94px 50px 94px;
@@ -91,7 +91,7 @@
 
 <body>
 <div class="head">
-    RELATÓRIO DE OMS QUE NÃO RESPONDERAM A PERGUNTA
+    RELATÓRIO DE OM QUE NÃO RESPONDEU A PERGUNTA
 </div>
 <div class="paginacao">
     <script type='text/php'>
@@ -115,7 +115,7 @@
     REGIÃO MENDONÇA FURTADO<br>
 </div>
 <div class="titulo">
-    RELATÓRIO DE OMS QUE NÃO RESPONDERAM A PERGUNTA
+    RELATÓRIO DE OM QUE NÃO RESPONDEU A PERGUNTA
 </div>
 
 

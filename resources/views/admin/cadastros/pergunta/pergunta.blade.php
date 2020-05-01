@@ -36,7 +36,7 @@
 
                             <div class="alert alert-dark">
                                 <h6>
-                                    <span class="audiowide">Anexo</span>
+                                    <span>Anexar documento de referência</span>
                                 </h6>
 
                                 <div class="row">
@@ -55,9 +55,61 @@
                                 </div>
                             </div>
 
+                            <div class="alert alert-silver">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="text-center">
+                                            <h6><span>Selecione a(às) OM que devem responder a pergunta </span></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    {{--areas de atuação disponíveis--}}
+                                    <div class="col-md-5">
+                                        <div class="text-center">
+                                            <span for="search">OM Disponível</span>
+                                        </div>
+                                        <select id="search" class="form-control" size="8"
+                                                multiple="multiple">
+                                        </select>
+                                    </div>
+
+                                    {{--options--}}
+                                    <div class="col-md-2">
+                                        <div class="text-center">
+                                            <label>Opções</label>
+                                        </div>
+                                        <div class="espacobaixo10"></div>
+                                        <button type="button" id="search_rightAll"
+                                                class="btn btn-block"><i
+                                                    class="fa fa-forward"></i></button>
+                                        <button type="button" id="search_rightSelected"
+                                                class="btn btn-block"><i
+                                                    class="fa fa-chevron-right "></i></button>
+                                        <button type="button" id="search_leftSelected"
+                                                class="btn btn-block"><i
+                                                    class="fa fa-chevron-left"></i></button>
+                                        <button type="button" id="search_leftAll" class="btn btn-block">
+                                            <i class="fa fa-backward"></i></button>
+                                    </div>
+
+
+                                    <div class="col-md-5">
+                                        <div class="text-center">
+                                            <span for="search_to">OM Selecionada</span>
+                                        </div>
+                                        <select name="om_pergunta[]" id="search_to"
+                                                class="form-control om_pergunta"
+                                                size="8"
+                                                multiple="multiple"></select>
+                                    </div>
+
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col">
-                                    <button type="submit" class="btn btn-block btn-secondary">
+                                    <button type="submit" class="btn btn-block btn-success">
                                         Cadastrar
                                     </button>
                                 </div>
@@ -97,7 +149,7 @@
     {{--Modal de editar--}}
     <div class="modal fade" id="ModalEdita" role="dialog"
          aria-labelledby="ModalEditaTitle" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="ModalEditaTitle">Edição de Pergunta</h5>
@@ -129,7 +181,7 @@
 
                                     <div class="alert alert-dark">
                                         <h6>
-                                            <span class="audiowide">Anexo</span>
+                                            <span>Anexar documento de referência</span>
                                         </h6>
 
                                         <div class="row">
@@ -147,7 +199,56 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="alert alert-silver">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="text-center">
+                                                    <h6><span>Selecione a(às) OM que devem responder a pergunta </span></h6>
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="text-center">
+                                                    <label for="search2">OM Disponível</label>
+                                                </div>
+                                                <select id="search2" class="form-control" size="8"
+                                                        multiple="multiple">
+                                                </select>
+                                            </div>
+
+                                            {{--options--}}
+                                            <div class="col-md-2">
+                                                <div class="text-center">
+                                                    <label>Opções</label>
+                                                </div>
+                                                <div class="espacobaixo10"></div>
+                                                <button type="button" id="search2_rightAll"
+                                                        class="btn btn-block"><i
+                                                            class="fa fa-forward"></i></button>
+                                                <button type="button" id="search2_rightSelected"
+                                                        class="btn btn-block"><i
+                                                            class="fa fa-chevron-right "></i></button>
+                                                <button type="button" id="search2_leftSelected"
+                                                        class="btn btn-block"><i
+                                                            class="fa fa-chevron-left"></i></button>
+                                                <button type="button" id="search2_leftAll" class="btn btn-block">
+                                                    <i class="fa fa-backward"></i></button>
+                                            </div>
+
+                                            <div class="col-md-5">
+                                                <div class="text-center">
+                                                    <label for="search2_to">OM Selecionada</label>
+                                                </div>
+                                                <select name="om_pergunta[]" id="search2_to"
+                                                        class="form-control om_pergunta"
+                                                        size="8"
+                                                        multiple="multiple"></select>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                     <div class="row">
                                     <div class="col">
                                         <button class="btn btn-outline-secondary btn-block" data-dismiss="modal">
@@ -256,8 +357,6 @@
 
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
-
-
             $('.modal').on('hidden.bs.modal', function () {
                 $('input').each(function () {
                     $(this).not('[name=_token]').val('');
@@ -265,10 +364,9 @@
                 });
                 $('.error').each(function () {
                     $(this).removeClass('error').addClass('disable');
-                })
-
+                });
+                $("#search2_to").empty();
             })
-
         });
 
         $('#pegunta_table').DataTable({
@@ -327,6 +425,31 @@
             ]
         });
 
+        valida = 0;
+        var mutationObserver = new MutationObserver(function (mutations) {
+            var om_pergunta = [];
+            mutations.forEach(function (mutation) {
+                for (var i = 0; i < mutation.target.length; i++) {
+                    om_pergunta.push(mutation.target[i].value, mutation.target[i].id);
+                }
+            });
+            var selecionados = om_pergunta.filter(function (valor, i) {
+                return om_pergunta.indexOf(valor) == i;
+            });
+            if (selecionados.length >= 1) {
+                valida = 1;
+                $('#search_to').removeClass('error')
+                $('#search_to-error').removeClass('error').addClass('disable');
+            } else {
+                valida = 0;
+                $('#search_to-error').removeClass('disable').addClass('error');
+                $('#search_to').removeClass('disable').addClass('error');
+            }
+        });
+
+        mutationObserver.observe(document.getElementById('search_to'), {
+            childList: true
+        });
 
         $('#form_nova_pergunta').validate({
             onkeyup: function (element) {
@@ -337,26 +460,84 @@
                 descricao: {
                     required: true,
                 },
+                "om_pergunta[]": {
+                    required: {
+                        depends: function () {
+                            if (!valida) {
+                                return true
+                            } else {
+                                return false
+                            }
+                        }
+                    },
+                }
 
             },
             messages: {
                 descricao: {
                     required: "Por favor, informe uma descrição para a pergunta.",
                 },
+                "om_pergunta[]": {
+                    required: "Por favor, informe ao menos uma om"
+                }
             },
         });
 
-        //
+
         function editaPergunta(id) {
             $('#ModalEdita').modal('show');
             $('#pergunta_id').val(id);
-
             $('#descricao_edita').val($('#edita_' + id).data('descricao'));
 
+            $.getJSON('/admin/lista/pergunta/om/' + id, function (oms) {
+                var om_selecionadas = [];
+                var om_disponivel = [];
+                var om_livres = [];
+
+                $.getJSON('/admin/gerencia/om/lista', function (data) {
+
+                    for (var i = 0; i < oms[0].om.length; i++) {
+                        om_selecionadas.push(oms[0].om[i].id)
+                    }
+                    for (var i = 0; i < data.length; i++) {
+                        om_disponivel.push(data[i].id)
+                    }
+
+                    $.grep(om_disponivel, function (el) {
+                        if ($.inArray(el, om_selecionadas) == -1) om_livres.push(el);
+                    });
+
+
+                    let search = '';
+                    let search_to = '';
+                    if (data.length) {
+                        for (var i = 0; i < data.length; i++) {
+                            for (var j = 0; j < om_livres.length; j++) {
+                                if (data[i].id == om_livres[j]) {
+                                    search += '<option id="' + data[i].id + '" value="' + data[i].id + '">' + data[i].nome + '</option>'
+                                }
+                            }
+                        }
+                        $("#search2").html(search);
+                    }
+
+                    if (om_selecionadas.length) {
+                        for (var i = 0; i < data.length; i++) {
+                            for (var j = 0; j < om_selecionadas.length; j++) {
+                                if (data[i].id == om_selecionadas[j]) {
+                                    search_to += '<option id="' + data[i].id + '" value="' + data[i].id + '">' + data[i].nome + '</option>'
+                                }
+                            }
+                        }
+                        $("#search2_to").html(search_to);
+                    }
+                })
+            })
+
         }
-
-        // form de editar organização militar
-
+        $('#form_edita_pergunta').on('submit', function () {
+            $('.om_pergunta option').prop('selected', true)
+        });
         $('#form_edita_pergunta').validate({
             onkeyup: function (element) {
                 $(element).valid();
@@ -366,14 +547,28 @@
                 descricao: {
                     required: true,
                 },
+                "om_pergunta[]": {
+                    required: {
+                        depends: function () {
+                            if (!valida) {
+                                return true
+                            } else {
+                                return false
+                            }
+                        }
+                    },
+                }
 
             },
             messages: {
                 descricao: {
                     required: "Por favor, informe uma descrição para a pergunta.",
                 },
+                "om_pergunta[]": {
+                    required: "Por favor, informe ao menos uma om"
+                }
             },
-        })
+        });
 
         function removePergunta(id) {
             $('#ModalRemover').modal('show');
@@ -447,5 +642,40 @@
                 }
             });
         }
+
+        om();
+
+        function om() {
+            $.getJSON('/admin/gerencia/om/lista', function (data) {
+                $("#search").empty();
+                let search = '';
+                if (data.length) {
+                    for (var i = 0; i < data.length; i++) {
+
+                        search += '<option id="' + data[i].id + '" value="' + data[i].id + '">' + data[i].nome + '</option>'
+                    }
+                    $("#search").html(search);
+                } else {
+
+                }
+            });
+        }
+
+        $('#form_nova_pergunta').on('submit', function () {
+            $('.om_pergunta option').prop('selected', true)
+        });
+
+        $('#search').multiselect({
+            search: {
+                left: '<input type="text"  class="form-control" placeholder="Pesquisar..." />',
+                right: '<input type="text"  class="form-control" placeholder="Pesquisar..." />'
+            }
+        });
+        $('#search2').multiselect({
+            search: {
+                left: '<input type="text"  class="form-control" placeholder="Pesquisar..." />',
+                right: '<input type="text"  class="form-control" placeholder="Pesquisar..." />'
+            }
+        });
     </script>
 @endsection

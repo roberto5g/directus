@@ -64,6 +64,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/usuario/lista/respostas', 'Respostas\RespostasController@getData');
 
 
+    //om_perguta
+    Route::get('/admin/lista/pergunta/om/{id}', 'Pergunta\OmPerguntaController@lista');
+
     //relatorios
     Route::get('/admin/gera/relatorio/om/sem/resposta/pergunta', 'Relatorio\RelatorioController@relatorio_om_sem_resposta');
     Route::get('/admin/gera/relatorio/geral/pergunta', 'Relatorio\RelatorioController@relatorio_geral');

@@ -421,3 +421,27 @@ toastr.options = {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
 }
+
+//// chrome81+jquery3xxfix.js corrige renderização dos elementos selecionados multiselect
+$.fn.mSort = function(callback) {
+    var children = this
+        .children()
+        .sort(callback);
+    for ( var j = 0; j < this.length; j++ ) {
+        for ( var i = 0; i < children.length; i++ ) {
+            this[j].appendChild(children[i]);
+        }
+    }
+
+    this
+        .find('optgroup')
+        .each(function(_, group) {
+            var children = $(group).children()
+                .sort(callback);
+            for ( var i = 0; i < children.length; i++ ) {
+                group.appendChild(children[i]);
+            }
+        });
+
+    return this;
+};

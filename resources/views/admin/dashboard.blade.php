@@ -107,7 +107,7 @@
                                                     <button type="submit" class="btn btn-secondary btn-block gera_pdf"
                                                             data-target="_black" name="pdf" value="pdf">
                                                         <i class="fa fa-download"> </i>
-                                                        Download PDF (Oms que não responderam)
+                                                        Download PDF (OM que não respondeu)
                                                     </button>
                                                 </form>
                                             </div>
