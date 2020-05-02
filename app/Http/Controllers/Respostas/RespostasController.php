@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Respostas;
 
 use App\Http\Controllers\Controller;
+use App\Models\Perguntas\OmPergunta;
 use App\Models\Perguntas\Perguntas;
 use App\Models\Respostas\Respostas;
 use Illuminate\Http\Request as FormRequest;
@@ -46,6 +47,10 @@ class RespostasController extends Controller
             }
 
             $resposta->save();
+
+            $om_pergunta = OmPergunta::where('om_id',Auth::user()->om->id)->where('pergunta_id', $id)->first();
+            $om_pergunta->status = "respondido";
+            $om_pergunta->save();
 
             if ($resposta instanceof Model) {
 
