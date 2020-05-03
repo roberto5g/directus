@@ -22,10 +22,8 @@ class RelatorioController extends Controller
     public function relatorio_om_sem_resposta(Request $request)
     {
 
-        $oms = Om::all();
-
         $perguntas = Perguntas::where('id', $request['pergunta_id'])
-            ->with(['respostas' => function ($respostas) {
+            ->with(['om','respostas' => function ($respostas) {
                 $respostas->with(['users' => function ($users) {
                     $users->with('om');
                 }]);
@@ -33,29 +31,45 @@ class RelatorioController extends Controller
 
         $pergunta = $perguntas[0];
 
-        $sem_resposta = [];
-        $array_om_id = [];
+        $resposta_pergunta = [];
         for ($j = 0; $j < count($perguntas); $j++) {
-            for ($x = 0; $x < count($perguntas[$j]->respostas); $x++) {
-                $array_om_id[] = $perguntas[$j]->respostas[$x]->users->om_id;
+
+            for ($x = 0; $x < count($perguntas[$j]->om); $x++) {
+                $item = new \stdClass();
+                $item->id = $perguntas[$j]->om[$x]->om_id;
+                $item->sigla = $perguntas[$j]->om[$x]->sigla;
+                $item->nome = $perguntas[$j]->om[$x]->nome;
+                $item->status = $perguntas[$j]->om[$x]->status;
+                if($perguntas[$j]->respostas){
+                    for($z = 0; $z < count($perguntas[$j]->respostas); $z++){
+                        if($perguntas[$j]->respostas[$z]->users->om_id == $perguntas[$j]->om[$x]->om_id){
+                            $item->resposta = $perguntas[$j]->respostas[$z]->resposta;
+                            $item->data = date('d/m/Y h:m:s', strtotime($perguntas[$j]->respostas[$z]->created_at));
+                            $item->anexo = $perguntas[$j]->respostas[$z]->anexo_resposta;
+                        }
+                    }
+                }
+                $resposta_pergunta[] = $item;
             }
         }
 
-        for ($i = 0; $i < count($oms); $i++) {
-
-            if (!in_array($oms[$i]->id, $array_om_id)) {
-                $item = new \stdClass();
-                $item->id = $oms[$i]->id;
-                $item->nome = $oms[$i]->nome;
-                $item->sigla = $oms[$i]->sigla;
-                $item->resposta = "Não informado";
+        $sem_resposta = [];
+        foreach ($resposta_pergunta as $val){
+            $item = new \stdClass();
+            if($val->status == 'pendente'){
+                $item->id = $val->id;
+                $item->sigla = $val->sigla;
+                $item->nome = $val->nome;
+                $item->status = $val->status;
+                $item->resposta = "Não respondido";
                 $item->data = "--";
-                $item->anexo = null;
+                $item->anexo = "--";
                 $sem_resposta[] = $item;
             }
 
         }
 
+        //dd($sem_resposta);
 
         // se o request for pdf então gera um arquivo pdf
         if ($request['pdf']) {
@@ -74,49 +88,73 @@ class RelatorioController extends Controller
     public function relatorio_geral(Request $request)
     {
 
-        $oms = Om::all();
-
         $perguntas = Perguntas::where('id', $request['pergunta_id'])
-            ->with(['respostas' => function ($respostas) {
+            ->with(['om','respostas' => function ($respostas) {
                 $respostas->with(['users' => function ($users) {
                     $users->with('om');
                 }]);
-            }])->get();
+            }])->orderBy('perguntas.status','DESC')->get();
+
+        //dd($perguntas);
 
         $pergunta = $perguntas[0];
 
-        $sem_resposta = [];
-        $array_om_id = [];
-        $com_resposta = [];
+        $resposta_pergunta = [];
         for ($j = 0; $j < count($perguntas); $j++) {
 
-            for ($x = 0; $x < count($perguntas[$j]->respostas); $x++) {
+            for ($x = 0; $x < count($perguntas[$j]->om); $x++) {
                 $item = new \stdClass();
-                $item->id = $perguntas[$j]->respostas[$x]->users->om_id;
-                $item->sigla = $perguntas[$j]->respostas[$x]->users->om->sigla;
-                $item->resposta = $perguntas[$j]->respostas[$x]->resposta;
-                $item->data = date('d/m/Y h:m:s', strtotime($perguntas[$j]->respostas[$x]->created_at));
-                //$item->anexo = $perguntas[$j]->respostas[$x]->anexo_resposta;
-                $com_resposta[] = $item;
-                $array_om_id[] = $perguntas[$j]->respostas[$x]->users->om_id;
+                $item->id = $perguntas[$j]->om[$x]->om_id;
+                $item->sigla = $perguntas[$j]->om[$x]->sigla;
+                $item->nome = $perguntas[$j]->om[$x]->nome;
+                $item->status = $perguntas[$j]->om[$x]->status;
+                if($perguntas[$j]->respostas){
+                    for($z = 0; $z < count($perguntas[$j]->respostas); $z++){
+                        if($perguntas[$j]->respostas[$z]->users->om_id == $perguntas[$j]->om[$x]->om_id){
+                            $item->resposta = $perguntas[$j]->respostas[$z]->resposta;
+                            $item->data = date('d/m/Y h:m:s', strtotime($perguntas[$j]->respostas[$z]->created_at));
+                            $item->anexo = $perguntas[$j]->respostas[$z]->anexo_resposta;
+                        }
+                    }
+                }
+                $resposta_pergunta[] = $item;
             }
         }
 
-        for ($i = 0; $i < count($oms); $i++) {
-
-            if (!in_array($oms[$i]->id, $array_om_id)) {
-                $item = new \stdClass();
-                $item->id = $oms[$i]->id;
-                $item->sigla = $oms[$i]->sigla;
-                $item->resposta = "Não informado";
+        $retorno_pendente = [];
+        foreach ($resposta_pergunta as $val){
+            $item = new \stdClass();
+            if($val->status == 'pendente'){
+                $item->id = $val->id;
+                $item->sigla = $val->sigla;
+                $item->nome = $val->nome;
+                $item->status = $val->status;
+                $item->resposta = "Não respondido";
                 $item->data = "--";
-                //$item->anexo = null;
-                $sem_resposta[] = $item;
+                $item->anexo = "--";
+                $retorno_pendente[] = $item;
             }
-
         }
 
-        $retorno = array_merge($com_resposta,$sem_resposta);
+        $retorno_respondido = [];
+        foreach ($resposta_pergunta as $val){
+            $item = new \stdClass();
+            if($val->status == 'respondido'){
+                $item->id = $val->id;
+                $item->sigla = $val->sigla;
+                $item->nome = $val->nome;
+                $item->status = $val->status;
+                $item->resposta = $val->resposta;
+                $item->data = $val->data;
+                $item->anexo = $val->anexo;
+                $retorno_respondido[] = $item;
+            }
+        }
+
+        //dd([$retorno_respondido,$retorno_pendente]);
+
+        $retorno = array_merge($retorno_respondido,$retorno_pendente);
+
         // se o request for pdf então gera um arquivo pdf
         if ($request['pdf']) {
 
