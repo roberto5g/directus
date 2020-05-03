@@ -95,8 +95,6 @@ class RelatorioController extends Controller
                 }]);
             }])->orderBy('perguntas.status','DESC')->get();
 
-        //dd($perguntas);
-
         $pergunta = $perguntas[0];
 
         $resposta_pergunta = [];
@@ -150,8 +148,6 @@ class RelatorioController extends Controller
                 $retorno_respondido[] = $item;
             }
         }
-
-        //dd([$retorno_respondido,$retorno_pendente]);
 
         $retorno = array_merge($retorno_respondido,$retorno_pendente);
 

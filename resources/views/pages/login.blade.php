@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
 
-    <title>SIR - 12ª RM</title>
+    <title>Directus - 12ª RM</title>
 
     <!-- Icons -->
     <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
@@ -25,7 +25,7 @@
     <script type="text/javascript">
         var isIE = /*@cc_on!@*/false || !!document.documentMode;
         if(isIE == true){
-            window.location.href = 'http://sir.12rm.eb.mil.br/errors/400'
+            window.location.href = 'http://directus.12rm.eb.mil.br/errors/400'
         }
     </script>
 </head>
@@ -63,7 +63,7 @@
                     <div class="login">
                         <div class="row">
                             <div class="col">
-                                <div class="alert alert-simples">
+                                <div class="alert alert-secondary">
                                     <h3 class="text-center"><span>Entre na sua Conta</span></h3>
                                     <form method="POST" action="{{ route('login') }}">
                                         {{ csrf_field() }}
@@ -97,98 +97,6 @@
                                             </div>
                                         </div>
 
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    {{--Modal de nova cadastro--}}
-                    <div class="modal fade" id="ModalNovoCadastro" tabindex="-1" role="dialog"
-                         aria-labelledby="ModalNovoCadastroTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="ModalNovoCadstroTitle">Cadastro</h5>
-                                    <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-
-                                {{--modal body--}}
-                                <div class="modal-body">
-                                    @include('pages.register')
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{--Modal de recupera senha--}}
-                    <div class="modal fade" id="ModalRecuperaSenha" tabindex="-1" role="dialog"
-                         aria-labelledby="ModalRecuperaSenhaTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="ModalRecuperaSenhaTitle">Recuperação de Senha</h5>
-                                    <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-
-                                {{--modal body--}}
-                                <div class="modal-body">
-                                    <form id="recuperar_senha" method="POST" action="{{route('recuperar.senha')}}">
-
-                                        <div class="alert alert-simples">
-                                            <h3 class="text-center"><span class="audiowide">Informe seus dados para a recuperação de senha</span>
-                                            </h3>
-                                            <div id="enviar_email">
-                                                <div class="alert alert-warning">
-                                                    <h4 class="text-center"><span class="audiowide">Atenção</span>
-                                                    </h4>
-                                                    <p><b>Ao informar o email e CPF, será enviado para o email informado
-                                                            um link para a criação de uma nova senha.</b></p>
-                                                </div>
-                                            </div>
-                                            <div id="erro_enviar_email" class="escondido">
-                                                <div class="alert alert-danger">
-                                                    <h4 class="text-center"><span class="audiowide">Erro</span>
-                                                    </h4>
-                                                    <div class="conteudo_erro"></div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-
-                                                <input type="email" id="recuperar_email"
-                                                       class="form-control"
-                                                       name="email" required
-                                                       placeholder="Email">
-
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" name="cpf" id="recuperar_cpf"
-                                                       class="form-control cpf"
-                                                       placeholder="Cpf"
-                                                       required>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <button type="button"
-                                                        class="btn btn-outline-secondary btn-block"
-                                                        data-dismiss="modal">Cancelar
-                                                </button>
-                                            </div>
-
-                                            <div class="col">
-                                                <button type="submit" class="btn btn-success btn-block">
-                                                    Enviar
-                                                </button>
-                                            </div>
-                                        </div>
                                     </form>
                                 </div>
                             </div>
