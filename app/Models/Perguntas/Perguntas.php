@@ -34,7 +34,7 @@ class Perguntas extends Model
     public function om()
     {
         return $this->belongsToMany(Om::class,'om_pergunta','pergunta_id','om_id')
-            ->select(['om_id','nome','status']);
+            ->select(['om_id','nome','sigla','status']);
     }
 
     public function respostas()

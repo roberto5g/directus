@@ -116,50 +116,58 @@ class PerguntaController extends Controller
     public function lista($id)
     {
 
-        $oms = Om::all();
-
         $perguntas = Perguntas::where('id', $id)
-            ->with(['respostas' => function ($respostas) {
+            ->with(['om','respostas' => function ($respostas) {
                 $respostas->with(['users' => function ($users) {
                     $users->with('om');
                 }]);
             }])->get();
 
-        $sem_resposta = [];
-        $array_om_id = [];
-        $com_resposta = [];
+        $resposta_pergunta = [];
         for ($j = 0; $j < count($perguntas); $j++) {
 
-            for ($x = 0; $x < count($perguntas[$j]->respostas); $x++) {
+            for ($x = 0; $x < count($perguntas[$j]->om); $x++) {
                 $item = new \stdClass();
-                $item->id = $perguntas[$j]->respostas[$x]->users->om_id;
-                $item->sigla = $perguntas[$j]->respostas[$x]->users->om->sigla;
-                $item->resposta = $perguntas[$j]->respostas[$x]->resposta;
-                $item->data = date('d/m/Y h:m:s', strtotime($perguntas[$j]->respostas[$x]->created_at));
-                $item->anexo = $perguntas[$j]->respostas[$x]->anexo_resposta;
-                $com_resposta[] = $item;
-                $array_om_id[] = $perguntas[$j]->respostas[$x]->users->om_id;
+                $item->id = $perguntas[$j]->om[$x]->om_id;
+                $item->sigla = $perguntas[$j]->om[$x]->sigla;
+                $item->nome = $perguntas[$j]->om[$x]->nome;
+                $item->status = $perguntas[$j]->om[$x]->status;
+                if($perguntas[$j]->respostas){
+                    for($z = 0; $z < count($perguntas[$j]->respostas); $z++){
+                        if($perguntas[$j]->respostas[$z]->users->om_id == $perguntas[$j]->om[$x]->om_id){
+                            $item->resposta = $perguntas[$j]->respostas[$z]->resposta;
+                            $item->data = date('d/m/Y h:m:s', strtotime($perguntas[$j]->respostas[$z]->created_at));
+                            $item->anexo = $perguntas[$j]->respostas[$z]->anexo_resposta;
+                        }
+                    }
+                }
+                $resposta_pergunta[] = $item;
             }
         }
 
-        for ($i = 0; $i < count($oms); $i++) {
-
-            if (!in_array($oms[$i]->id, $array_om_id)) {
-                $item = new \stdClass();
-                $item->id = $oms[$i]->id;
-                $item->sigla = $oms[$i]->sigla;
-                $item->resposta = "Não informado";
+        $retorno = [];
+        foreach ($resposta_pergunta as $val){
+            $item = new \stdClass();
+            if($val->status == 'pendente'){
+                $item->id = $val->id;
+                $item->sigla = $val->sigla;
+                $item->nome = $val->nome;
+                $item->status = $val->status;
+                $item->resposta = "Não respondido";
                 $item->data = "--";
-                $item->anexo = null;
-                $sem_resposta[] = $item;
+                $item->anexo = "--";
+            } else {
+                $item->id = $val->id;
+                $item->sigla = $val->sigla;
+                $item->nome = $val->nome;
+                $item->status = $val->status;
+                $item->resposta = $val->resposta;
+                $item->data = $val->data;
+                $item->anexo = $val->anexo;
             }
-
+            $retorno[] = $item;
         }
 
-        $retorno = array_merge($com_resposta,$sem_resposta);
-
-        //return response()->json([$com_resposta,$sem_resposta]);
-        //return response()->json($retorno);
         return datatables()->of($retorno)->make(true);
 
 
@@ -255,13 +263,41 @@ class PerguntaController extends Controller
 
     public function listaData()
     {
-        $pergunta = Perguntas::with(['user' => function ($user) {
+        $perguntas = Perguntas::with(['om','user' => function ($user) {
             $user->with('om');
         }])->get();
 
-        // return response()->json($pergunta);
+        $percentual = [];
+        $pendente = 0;
+        $respondido = 0;
+        foreach ($perguntas as $pergunta){
+            $pendente=0;
+            $respondido=0;
+            $item = new \stdClass();
+            foreach ($pergunta->om as $om){
+                if($om->status=='pendente'){
+                    $pendente+=1;
+                } else {
+                    $respondido+=1;
+                }
+            }
+            $item->porcentagem = number_format(($respondido*100)/($respondido+$pendente),2);
+            $percentual[] = $item;
+        }
 
-        return datatables()->of($pergunta)->addColumn('action', function ($query) {
+        $retorno = [];
+        for ($i = 0; $i < count($perguntas); $i++){
+            $item = new \stdClass();
+            $item->id = $perguntas[$i]->id;
+            $item->sigla = $perguntas[$i]->user->om->sigla;
+            $item->descricao = $perguntas[$i]->descricao;
+            $item->created_at = date('d/m/Y h:m:s', strtotime($perguntas[$i]->created_at));
+            $item->status = $perguntas[$i]->status;
+            $item->porcentagem = $percentual[$i]->porcentagem;
+            $retorno[] = $item;
+        }
+
+        return datatables()->of($retorno)->addColumn('action', function ($query) {
 
 
             return '<div class="text-center"> 

@@ -29,9 +29,6 @@ class HomeController extends Controller
     {
         $user_id = Auth::user()->id;
         $user_om_id = Auth::user()->om->id;
-        $resutado = Perguntas::where('status','Ativo')->with(['respostas' => function ($query) use ($user_id) {
-            $query->where('user_id', $user_id);
-        }])->get();
 
         $perguntas_select = Perguntas::where('status','Ativo')->with(['user' => function($user){
             $user->with('om');

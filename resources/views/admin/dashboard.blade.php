@@ -24,6 +24,7 @@
                         <th class="text-center">Descrição</th>
                         <th class="text-center">Data pergunta</th>
                         <th class="text-center">Status</th>
+                        <th class="text-center">Porcentagem</th>
                         <th class="text-center">Ação</th>
                     </tr>
                     </thead>
@@ -166,6 +167,7 @@
         });
 
         function detalhesPergunta(id) {
+            console.log(id)
             $('#ModalDetalhe').modal('show');
             $('.pergunta_id').val(id);
 
@@ -175,6 +177,11 @@
                 "autoWidth": false,
                 "ajax": "admin/gerencia/lista/pergunta/" + id,
                 'order': [0, 'desc'],
+                rowCallback: function (row, data, index) {
+                    if(data.status == 'pendente'){
+                        $(row).css('background-color', '#FA5858');
+                    }
+                },
                 'columnDefs': [
                     {
                         "targets": [0, 2, 3], // your case first column
@@ -199,7 +206,7 @@
 
                     {
                         "targets": 1, render: function (data) {
-                            if (data != "Não informado") {
+                            if (data != "Não respondido") {
                                 return data;
                             } else {
                                 return '<div class="text-center">' + data + '</div>';
@@ -209,11 +216,14 @@
                     },
                     {
                         "targets": 3, render: function (data) {
-                            if (data != null) {
+                            console.log(data)
+                            if (data != null && data != "--") {
                                 return '<h6><a href="/storage/' + data + '"  class="badge badge-success" target="_blank">' +
                                     '<i class="fa fa-file-text"></i> anexo</a></h6>';
-                            } else {
+                            } else if(data == null){
                                 return '<h6><span class="badge badge-warning"> sem anexo </span></h6>';
+                            } else {
+                                return '<span class="text-center"> -- </span>';
                             }
 
                         }
@@ -257,7 +267,7 @@
             'order': [0, 'desc'],
             'columnDefs': [
                 {
-                    "targets": [0, 1, 2, 3, 4], // your case first column
+                    "targets": [0, 1, 2, 3, 4,5], // your case first column
                     "className": "text-center",
                 },
                 {
@@ -270,8 +280,8 @@
                     "width": "10%", "targets": 2
                 },
                 {
-                    "targets": 2, render: function (data) {
-                        return moment(data).format('DD/MM/YYYY');
+                    "targets": 4, render: function (data) {
+                        return '<h6><span class="badge badge-primary">' + data + '%</span></h6>';
                     }
                 },
                 {
@@ -288,15 +298,19 @@
                     "width": "10%", "targets": 4
                 },
                 {
-                    "targets": 4,
+                    "width": "10%", "targets": 5
+                },
+                {
+                    "targets": 5,
                     "orderable": false
                 },
             ],
             "columns": [
-                {"data": "user.om.sigla"},
+                {"data": "sigla"},
                 {"data": "descricao"},
                 {"data": "created_at"},
                 {"data": "status"},
+                {"data": "porcentagem"},
                 {"data": "action"},
             ]
         });
