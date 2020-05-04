@@ -15,7 +15,7 @@ class CreatePerguntasTable extends Migration
     {
         Schema::create('perguntas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descricao');
+            $table->text('descricao');
             $table->string('anexo')->nullable();
             $table->integer('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

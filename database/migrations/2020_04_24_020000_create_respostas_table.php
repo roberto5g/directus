@@ -15,7 +15,7 @@ class CreateRespostasTable extends Migration
     {
         Schema::create('respostas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('resposta');
+            $table->text('resposta');
             $table->string('anexo_resposta')->nullable();
             $table->integer('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
