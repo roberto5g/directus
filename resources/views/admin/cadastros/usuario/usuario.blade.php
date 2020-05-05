@@ -522,7 +522,7 @@
             rules: {
                 nome: {
                     required: true,
-                    minlength: 6
+                    minlength: 3
                 },
                 tipo: {
                     required: true,
@@ -570,7 +570,7 @@
                 },
                 nome: {
                     required: "Por favor, informe o nome.",
-                    minlength: "O nome deve conter no mínimo 10 caracteres."
+                    minlength: "O nome deve conter no mínimo 3 caracteres."
                 },
                 password: {
                     required: "Por favor, informe uma senha.",
@@ -704,7 +704,7 @@
             rules: {
                 nome: {
                     required: true,
-                    minlength: 6
+                    minlength: 3
                 },
                 tipo: {
                     required: true,
@@ -747,7 +747,7 @@
                 },
                 nome: {
                     required: "Por favor, informe o nome.",
-                    minlength: "O nome deve conter no mínimo 10 caracteres."
+                    minlength: "O nome deve conter no mínimo 3 caracteres."
                 },
                 tipo: {
                     required: "Por favor, informe um tipo para o usuário."
