@@ -624,14 +624,14 @@
                 if (om == 'om_id_edita') {
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].id == om_id) {
-                            $('#' + om).append('<option value="' + data[i].id + '" selected>' + data[i].nome + '</option>');
+                            $('#' + om).append('<option value="' + data[i].id + '" selected>' + data[i].sigla + '</option>');
                         } else {
-                            $('#' + om).append('<option value="' + data[i].id + '">' + data[i].nome + '</option>');
+                            $('#' + om).append('<option value="' + data[i].id + '">' + data[i].sigla + '</option>');
                         }
                     }
                 } else {
                     for (var i = 0; i < data.length; i++) {
-                        $('#' + om).append('<option value="' + data[i].id + '">' + data[i].nome + '</option>');
+                        $('#' + om).append('<option value="' + data[i].id + '">' + data[i].sigla + '</option>');
                     }
                 }
 
