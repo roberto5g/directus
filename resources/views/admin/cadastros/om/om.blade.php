@@ -31,7 +31,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="sigla">Sigla da Organização Militar</label>
-                                        <input type="text" class="form-control caixa_alta" id="sigla"
+                                        <input type="text" class="form-control" id="sigla"
                                                aria-describedby="siglaHelp" name="sigla"
                                                placeholder="Insira a sigla da Organização Militar" required>
                                     </div>
@@ -108,7 +108,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="sigla_Edita">Sigla da Organização Militar</label>
-                                        <input type="text" class="form-control caixa_alta" id="sigla_edita"
+                                        <input type="text" class="form-control" id="sigla_edita"
                                                aria-describedby="sigla_editaHelp" name="sigla"
                                                placeholder="Insira a sigla da Organização Militar" required>
                                         <small id="sigla_editaHelp" class="form-text text-muted">Sigla da Organização, ex:
