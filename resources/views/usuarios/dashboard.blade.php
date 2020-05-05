@@ -276,7 +276,7 @@
                 "data": "perguntas.created_at"
             },
             {
-                "data": "perguntas.created_at"
+                "data": "created_at"
             },
             {
                 "data": "action"

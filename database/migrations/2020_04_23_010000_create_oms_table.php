@@ -22,8 +22,8 @@ class CreateOmsTable extends Migration
         });
 
         return Om::create([
-            'nome' => 'Comando da 12ª Região Militar',
-            'sigla' => 'CMDO 12ªRM',
+            'nome' => 'ADMINISTRADOR 12ªRM',
+            'sigla' => 'ADMINISTRADOR 12ªRM',
         ]);
     }
 

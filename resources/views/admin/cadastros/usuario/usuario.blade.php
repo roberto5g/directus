@@ -10,35 +10,49 @@
                     </div>
                 </div>
 
-                    <form id="form_cadastrar_usuario" method="POST">
-                        <div class="alert alert-simples">
+                <form id="form_cadastrar_usuario" method="POST">
+                    <div class="alert alert-simples">
 
-                            {{--Nome completo--}}
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
+                        {{--Nome completo--}}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
 
-                                        <label for="nome">Nome Completo</label>
-                                        <input type="text" class="form-control caixa_alta" id="nome"
-                                               aria-describedby="nomeHelp" name="nome"
-                                               placeholder="Insira o nome completo do administrador" required>
-                                    </div>
+                                    <label for="nome">Nome Completo</label>
+                                    <input type="text" class="form-control caixa_alta" id="nome"
+                                           aria-describedby="nomeHelp" name="nome"
+                                           placeholder="Insira o nome completo do administrador" required>
                                 </div>
                             </div>
+                            <div class="col">
+                                <div class="form-group">
 
-                            {{--Email--}}
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-
-                                        <label for="email">Email</label>
-                                        <input type="text" class="form-control" id="email"
-                                               aria-describedby="nomeHelp" name="email"
-                                               placeholder="Insira o email" required>
-                                    </div>
+                                    <label for="tipo">Tipo</label>
+                                    <select class="form-control required"
+                                            name="tipo" id="tipo">
+                                        <option value="">Selecione um tipo</option>
+                                        <option value="administrador">Administrador do sistema</option>
+                                        <option value="gerente">Controle de pergunas</option>
+                                        <option value="usuario">Usuário</option>
+                                    </select>
                                 </div>
-                                {{--OM--}}
-                                <div class="col">
+                            </div>
+                        </div>
+
+                        {{--Email--}}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    <label for="email">Email</label>
+                                    <input type="text" class="form-control" id="email"
+                                           aria-describedby="nomeHelp" name="email"
+                                           placeholder="Insira o email" required>
+                                </div>
+                            </div>
+                            {{--OM--}}
+
+                                <div id="om" class="col">
                                     <div class="form-group">
                                         <label for="om_id" class="preto">Organização Militar</label>
                                         <select class="form-control form_select2 required"
@@ -46,41 +60,41 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+
+                        </div>
 
 
+                        {{--Senha--}}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
 
-                            {{--Senha--}}
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-
-                                        <label for="password">Senha</label>
-                                        <input type="password" id="password" name="password" class="form-control"
-                                               placeholder="Informe uma senha"
-                                               required>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-
-                                        <label for="password_confirmation">Repita a Senha</label>
-                                        <input type="password" id="password_confirmation" name="password_confirmation"
-                                               class="form-control"
-                                               placeholder="Repita a senha">
-                                    </div>
+                                    <label for="password">Senha</label>
+                                    <input type="password" id="password" name="password" class="form-control"
+                                           placeholder="Informe uma senha"
+                                           required>
                                 </div>
                             </div>
+                            <div class="col">
+                                <div class="form-group">
 
-                            <div class="row">
-                                <div class="col">
-                                    <button class="btn btn-block btn-secondary">
-                                        Cadastrar
-                                    </button>
+                                    <label for="password_confirmation">Repita a Senha</label>
+                                    <input type="password" id="password_confirmation" name="password_confirmation"
+                                           class="form-control"
+                                           placeholder="Repita a senha">
                                 </div>
                             </div>
                         </div>
-                    </form>
+
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-block btn-secondary">
+                                    Cadastrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
                 <div class="espacobaixo10"></div>
 
@@ -94,6 +108,7 @@
                                 <th class="text-center">Nome</th>
                                 <th class="text-center">Organização Militar</th>
                                 <th class="text-center">Email</th>
+                                <th class="text-center">Tipo</th>
                                 <th class="text-center">Ações</th>
                             </tr>
                             </thead>
@@ -140,6 +155,16 @@
 
                                     </div>
                                 </div>
+                                <div class="col">
+                                    <div class="form-group">
+
+                                        <label for="tipo_edita">Tipo</label>
+                                        <select class="form-control required"
+                                                name="tipo" id="tipo_edita">
+
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
                             {{--Email e cpf--}}
@@ -155,15 +180,17 @@
                                 </div>
 
                                 {{--OM--}}
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="om_id_edita" class="preto">Organização Militar</label>
-                                        <select class="form-control form_select2 required"
-                                                name="om_id_edita" id="om_id_edita">
-                                        </select>
 
+                                    <div id="om_edita" class="col">
+                                        <div class="form-group">
+                                            <label for="om_id_edita" class="preto">Organização Militar</label>
+                                            <select class="form-control form_select2 required"
+                                                    name="om_id_edita" id="om_id_edita">
+                                            </select>
+
+                                        </div>
                                     </div>
-                                </div>
+
 
                             </div>
 
@@ -301,23 +328,46 @@
                 'order': [0, 'desc'],
                 'columnDefs': [
                     {
-                        "targets": [0,1,2, 3], // your case first column
+                        "targets": [0, 1, 2, 3, 4], // your case first column
                         "className": "text-center",
                     },
                     {
                         "width": "20%", "targets": 0
                     },
                     {
-                        "width": "10%", "targets": 1
+                        "width": "30%", "targets": 1
                     },
                     {
-                        "width": "15%", "targets": 2
+                        "width": "20%", "targets": 2
                     },
                     {
-                        "width": "10%", "targets": 3
+                        "width": "20%", "targets": 3
                     },
                     {
-                        "targets": [3],
+                        "targets": 3,
+                        render: function (data) {
+                            let tipos = ['administrador', 'gerente', 'usuario'];
+                            let tipos_view = ['Administrador do sistema', 'Controle de perguntas', 'Usuário'];
+                            for (var i = 0; i < tipos.length; i++) {
+                                if (tipos[i] == data) {
+                                    if (data == 'administrador') {
+                                        return '<h6><span class="badge badge-danger">' + tipos_view[i] + '</span></h6>';
+                                    } else if (data == 'gerente') {
+                                        return '<h6><span class="badge badge-success">' + tipos_view[i] + '</span></h6>';
+                                    } else {
+                                        return '<h6><span class="badge badge-secondary">' + tipos_view[i] + '</span></h6>';
+                                    }
+
+                                }
+                            }
+
+                        }
+                    },
+                    {
+                        "width": "10%", "targets": 4
+                    },
+                    {
+                        "targets": [4],
                         "orderable": false
                     },
                 ],
@@ -326,20 +376,32 @@
                     {"data": "nome"},
                     {"data": "om.nome"},
                     {"data": "email"},
+                    {"data": "tipo"},
                     {"data": "action"},
                 ]
             });
 
         })
 
+        $('#tipo').on('change', function () {
+            console.log($(this).valid())
+            if ($(this).valid()) {
+                if ($(this).val() != 'usuario') {
+                    $('#om').removeClass('enable').addClass('disable');
+                } else {
+                    $('#om').removeClass('disable').addClass('enable');
+                }
+            }
+
+        })
 
         function editarSenha(adm) {
             $('#ModalResetaSenha').modal('show')
-            $('.adm_nome').text($('#senha_'+adm).data('nome'));
+            $('.adm_nome').text($('#senha_' + adm).data('nome'));
             $('.resetarSenha').attr('onClick', 'senha(' + adm + ');');
         }
 
-        function senha(id){
+        function senha(id) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -364,7 +426,7 @@
 
         function remover(adm) {
             $('#ModalRemover').modal('show');
-            $('.mob_nome').text($('#remover_'+adm).data('nome'));
+            $('.mob_nome').text($('#remover_' + adm).data('nome'));
             $('.remover').attr('onClick', 'removerAdm(' + adm + ');');
         }
 
@@ -454,6 +516,9 @@
                     required: true,
                     minlength: 6
                 },
+                tipo: {
+                    required: true,
+                },
 
                 om_id: {
                     required: true,
@@ -491,6 +556,9 @@
                 },
                 om_id: {
                     required: "Por favor, informe uma Organização militar."
+                },
+                tipo: {
+                    required: "Por favor, informe um tipo para o usuário."
                 },
                 nome: {
                     required: "Por favor, informe o nome.",
@@ -567,10 +635,21 @@
             $('#ModalEditaAdministrador').modal('show');
             $('#adm_id').val(id);
 
-            $('#nome_edita').val($('#edita_'+id).data('nome'));
-            $('#email_edita').val($('#edita_'+id).data('email'));
+            $('#nome_edita').val($('#edita_' + id).data('nome'));
+            $('#email_edita').val($('#edita_' + id).data('email'));
+            let tipo = $('#edita_' + id).data('tipo');
+            $('#tipo_edita').empty();
+            let tipos = ['administrador', 'gerente', 'usuario'];
+            let tipos_view = ['Administrador do sistema', 'Controle de perguntas', 'Usuário'];
+            for (var i = 0; i < tipos.length; i++) {
+                if (tipos[i] == tipo) {
+                    $('#tipo_edita').append('<option value="' + tipos[i] + '" selected>' + tipos_view[i] + '</option>');
+                } else {
+                    $('#tipo_edita').append('<option value="' + tipos[i] + '">' + tipos_view[i] + '</option>');
+                }
+            }
 
-            om('om_id_edita', $('#edita_'+id).data('om_id'))
+            om('om_id_edita', $('#edita_' + id).data('om_id'))
 
         }
 
@@ -609,6 +688,9 @@
                 nome: {
                     required: true,
                     minlength: 6
+                },
+                tipo: {
+                    required: true,
                 },
 
                 om_id: {
@@ -649,6 +731,9 @@
                 nome: {
                     required: "Por favor, informe o nome.",
                     minlength: "O nome deve conter no mínimo 10 caracteres."
+                },
+                tipo: {
+                    required: "Por favor, informe um tipo para o usuário."
                 },
             },
             submitHandler: function (form) {

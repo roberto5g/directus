@@ -30,7 +30,7 @@
                 <div class="text-center">
                     <strong>
 
-                        {{ auth()->user()->om->sigla }}
+                        {{ auth()->user()->nome }}
 
 
                     </strong>

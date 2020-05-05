@@ -53,13 +53,13 @@ class OmController extends Controller
 
     public function lista()
     {
-        $oms = Om::all();
+        $oms = Om::where('id','>',1)->get();
         return response()->json($oms);
     }
 
     public function getData()
     {
-        $oms = Om::all();
+        $oms = Om::where('id','>',1)->get();
 
         return datatables()->of($oms)->addColumn('action', function ($query) {
             return '<div class="text-center"> 

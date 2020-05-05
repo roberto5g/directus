@@ -22,7 +22,7 @@ class UserController extends Controller
             'email' => strtolower($request['email']),
             'password' => bcrypt($request['password']),
             'om_id' =>  $request['om_id'],
-            'tipo' => "usuario",
+            'tipo' => $request['tipo'],
         ]);
 
         return response()->json($usuario);
@@ -33,6 +33,7 @@ class UserController extends Controller
         $usuario = User::find($id);
         $usuario->nome = $request['nome'];
         $usuario->email = $request['email'];
+        $usuario->tipo = $request['tipo'];
         $usuario->om_id = $request['om_id_edita'];
         $usuario->save();
         return response()->json($usuario);
@@ -64,6 +65,7 @@ class UserController extends Controller
                         id="edita_' . $query->id . '" 
                         data-nome="' . $query->nome . '" 
                         data-email="' . $query->email . '" 
+                        data-tipo="' . $query->tipo . '" 
                         data-om_id="' . $query->om_id . '" 
                             data-toggle="modal">
                             <i class="fa fa-edit separaicon " data-toggle="tooltip" data-placement="top" title="Editar Oficial Mobilizador"></i>

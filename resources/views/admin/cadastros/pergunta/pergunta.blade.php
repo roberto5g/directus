@@ -631,7 +631,7 @@
             if (data.length) {
                 for (var i = 0; i < data.length; i++) {
 
-                    search += '<option id="' + data[i].id + '" value="' + data[i].id + '">' + data[i].nome + '</option>'
+                    search += '<option id="' + data[i].id + '" value="' + data[i].id + '">' + data[i].sigla + '</option>'
                 }
                 $("#search").html(search);
             } else {

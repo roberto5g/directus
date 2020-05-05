@@ -221,7 +221,11 @@ class PerguntaController extends Controller
 
     public function getData()
     {
-        $pergunta = Perguntas::all();
+        if(Auth::user()->tipo == 'administrador'){
+            $pergunta = Perguntas::all();
+        } elseif (Auth::user()->tipo == 'gerente'){
+            $pergunta = Perguntas::where('user_id',Auth::user()->id)->get();
+        }
 
         return datatables()->of($pergunta)->addColumn('action', function ($query) {
 
@@ -263,9 +267,16 @@ class PerguntaController extends Controller
 
     public function listaData()
     {
-        $perguntas = Perguntas::with(['om','user' => function ($user) {
-            $user->with('om');
-        }])->get();
+        if(Auth::user()->tipo == 'administrador'){
+            $perguntas = Perguntas::with(['om','user' => function ($user) {
+                $user->with('om');
+            }])->get();
+        } elseif (Auth::user()->tipo == 'gerente'){
+            $perguntas = Perguntas::where('user_id',Auth::user()->id)->with(['om','user' => function ($user) {
+                $user->with('om');
+            }])->get();
+        }
+
 
         $percentual = [];
         $pendente = 0;

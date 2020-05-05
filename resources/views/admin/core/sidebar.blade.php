@@ -19,7 +19,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="{{route('usuario')}}"><i class="fa fa-user"></i>
-                            Usuário</a>
+                            Usuários</a>
                     </li>
 
                     <li class="nav-item">
@@ -29,7 +29,14 @@
 
                 </ul>
 
+            @elseif (Auth::user()->tipo == 'gerente')
+                <li class="nav-item">
+                    <a class="nav-link " href="{{route('pergunta')}}"><i class="fa fa-tasks"></i>
+                        Perguntas</a>
+                </li>
             @endif
+
+
         </ul>
     </nav>
     <button class="sidebar-minimizer brand-minimizer" type="button"></button>
