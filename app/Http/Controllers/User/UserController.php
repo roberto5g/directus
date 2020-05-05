@@ -29,9 +29,18 @@ class UserController extends Controller
             'password' => bcrypt($request['password']),
             'om_id' =>  $om_id,
             'tipo' => $request['tipo'],
+            'status' => 'pendente',
         ]);
 
         return response()->json($usuario);
+    }
+
+    public function updatesenha(Request $request)
+    {
+        $user = User::find(auth()->user()->id);
+        $user->password = bcrypt($request['password_edit']);
+        $user->save();
+        return response()->json($user);
     }
 
     public function edita(Request $request, $id)

@@ -4,7 +4,7 @@
         <div class="animated fadeIn">
             <div class="text-center">
                 <div class="alert alert-simples">
-                    <h3><i class="fa fa-users"></i> <span class="audiowide">Gerenciamento de Organização Militar</span>
+                    <h3><i class="fa fa-fort-awesome"></i> <span class="audiowide">Gerenciamento de Organização Militar</span>
                     </h3>
                 </div>
             </div>
@@ -225,10 +225,10 @@
                     "className": "text-center",
                 },
                 {
-                    "width": "70%", "targets": 0
+                    "width": "60%", "targets": 0
                 },
                 {
-                    "width": "10%", "targets": 1
+                    "width": "20%", "targets": 1
                 },
                 {
                     "width": "10%", "targets": 2

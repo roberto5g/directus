@@ -62,7 +62,12 @@ class HomeController extends Controller
             $oms = Om::all();
             return view('admin.dashboard',compact('oms'));
         } else {
-            return view('usuarios.dashboard', compact('perguntas'));
+            if(Auth::user()->status == 'pendente'){
+                return view('usuarios.pendente');
+            } else {
+                return view('usuarios.dashboard', compact('perguntas'));
+            }
+
         }
 
     }

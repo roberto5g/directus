@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/gerencia/cadastra/usuario', 'User\UserController@cadastra');
     Route::post('/admin/gerencia/edita/usuario/{id}', 'User\UserController@edita');
     Route::post('/admin/gerencia/reseta/usuario/{id}', 'User\UserController@resetaSenha');
-    Route::post('/admin/gerencia/updatesenha/usuario/{id}', 'User\UserController@updateSenha');
+    Route::post('/admin/gerencia/updatesenha/usuario', 'User\UserController@updatesenha');
     Route::post('/admin/gerencia/remove/usuario/{id}', 'User\UserController@remove');
 
     //pergunta

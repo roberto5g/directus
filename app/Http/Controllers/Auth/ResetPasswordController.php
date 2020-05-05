@@ -4,34 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\SendRecoveryMailUser;
-use App\Models\HashRecuperaSenha;
 use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request as FormRequest;
+use Request;
 use Illuminate\Support\Facades\Mail;
 
 class ResetPasswordController extends Controller
 {
 
-    public function index($hashuser, $hashrecovery)
-    {
-        $user = User::where('hash', $hashuser)->first();
-
-        $hash_recupera_senha = HashRecuperaSenha::where('user_id', $user->id)->first();
-
-        if($hash_recupera_senha){
-            if ($hash_recupera_senha->hash == $hashrecovery) {
-                return view('candidato.home.recovery.nova_senha_candidato', compact('user', 'hashrecovery'));
-            } else {
-                return view('candidato.home.recovery.erro');
-            }
-        } else {
-            return view('candidato.home.recovery.erro');
-        }
-
-    }
-
-
-    public function recuperarSenha(Request $resquest)
+    public function recuperarSenha(FormRequest $resquest)
     {
         $user = User::where('cpf', limpaCPF($resquest['cpf']))->first();
 
@@ -56,26 +38,30 @@ class ResetPasswordController extends Controller
         }
     }
 
-    public function redefinirSenha(Request $request)
+    public function redefinirSenha(FormRequest $request)
     {
 
-        $user = User::where('hash', $request['hashsuer'])->first();
+        $user = User::find(auth()->user()->id);
 
-        $hash_recupera_senha = HashRecuperaSenha::where('user_id', $user->id)->first();
 
-        if ($hash_recupera_senha->hash == $request['hash']) {
-            if ($request['password'] == $request['password_confirmation']) {
-                $user->password = bcrypt($request['password']);
-                $user->save();
-                $hash_recupera_senha->delete();
-                return response()->json(true);
-            } else {
-                return response()->json(false);
-            }
-        } else {
-            return response()->json(false);
+        if ($request['password'] == $request['password_confirmation']) {
+            $user->password = bcrypt($request['password']);
+            $user->status = 'ativo';
+            $user->save();
+            $status=1;
         }
 
+        if ($user instanceof Model) {
+
+            Request::session()->flash('sucesso', "Senha editada com sucesso.");
+            return back();
+
+        } else {
+            Request::session()->flash('erro', "Ocorreu um erro, tente novamente.");
+
+            return back();
+        }
     }
+
 
 }

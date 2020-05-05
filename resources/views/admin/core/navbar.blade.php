@@ -39,8 +39,6 @@
                 <div class="dropdown-header text-center">
                     <strong>Opções</strong>
                 </div>
-                <a class="dropdown-item" href=""><i
-                            class="fa fa-user"></i> Dados Pessoais</a>
 
                 <a href="#" class="dropdown-item" id="senha_modal"><i
                             class="fa fa-lock"></i> Alterar Senha</a>
@@ -79,7 +77,6 @@
 
                 <form id="updatesenha" method="POST">
                     {{ csrf_field() }}
-                    <input type="hidden" id="user_id" name="user_id" value="{{ Auth::user()->id }}">
                     <div class="alert alert-simples">
 
                         <div class="row">
@@ -146,28 +143,27 @@
             rules: {
                 password_edit: {
                     required: true,
-                    minlength: 8,
+                    minlength: 6,
 
                 },
                 password_confirmation_edit: {
                     required: true,
-                    minlength: 8,
+                    minlength: 6,
                     equalTo: "#password_edit"
                 },
             },
             messages: {
                 password_edit: {
                     required: "Por favor, informe uma senha.",
-                    minlength: "Sua senha deve conter no mínimo 8 caracteres."
+                    minlength: "Sua senha deve conter no mínimo 6 caracteres."
                 },
                 password_confirmation_edit: {
                     required: "Por favor, informe uma senha.",
-                    minlength: "Sua senha deve conter no mínimo 8 caracteres.",
+                    minlength: "Sua senha deve conter no mínimo 6 caracteres.",
                     equalTo: "As senhas não conferem."
                 }
             },
             submitHandler: function (form) {
-                let user_id = $('#user_id').val();
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -175,11 +171,11 @@
                 });
                 $.ajax({
                     type: 'POST',
-                    url: '/admin/gerencia/updatesenha/usuario/' + user_id,
+                    url: '/admin/gerencia/updatesenha/usuario',
                     data: $('#updatesenha').serialize(),
 
                     success: function (data) {
-                        toastr.success('Senha alterado com sucesso!', 'Sucesso!', {timeOut: 3000});
+                        toastr.success('Senha alterada com sucesso!', 'Sucesso!', {timeOut: 3000});
                         $('.modal').modal('hide');
                     },
                     error: function (data) {
