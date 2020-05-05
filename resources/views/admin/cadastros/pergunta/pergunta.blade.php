@@ -480,7 +480,7 @@
                     for (var i = 0; i < data.length; i++) {
                         for (var j = 0; j < om_livres.length; j++) {
                             if (data[i].id == om_livres[j]) {
-                                search += '<option id="' + data[i].id + '" value="' + data[i].id + '">' + data[i].nome + '</option>'
+                                search += '<option id="' + data[i].id + '" value="' + data[i].id + '">' + data[i].sigla + '</option>'
                             }
                         }
                     }
@@ -491,7 +491,7 @@
                     for (var i = 0; i < data.length; i++) {
                         for (var j = 0; j < om_selecionadas.length; j++) {
                             if (data[i].id == om_selecionadas[j]) {
-                                search_to += '<option id="' + data[i].id + '" value="' + data[i].id + '">' + data[i].nome + '</option>'
+                                search_to += '<option id="' + data[i].id + '" value="' + data[i].id + '">' + data[i].sigla + '</option>'
                             }
                         }
                     }

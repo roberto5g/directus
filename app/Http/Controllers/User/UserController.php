@@ -17,11 +17,17 @@ class UserController extends Controller
 
     public function cadastra(Request $request)
     {
+        $om_id = '';
+        if($request['tipo'] != 'usuario'){
+            $om_id = 1;
+        } else {
+            $om_id = $request['om_id'];
+        }
         $usuario = User::create([
             'nome' => $request['nome'],
             'email' => strtolower($request['email']),
             'password' => bcrypt($request['password']),
-            'om_id' =>  $request['om_id'],
+            'om_id' =>  $om_id,
             'tipo' => $request['tipo'],
         ]);
 
@@ -30,11 +36,17 @@ class UserController extends Controller
 
     public function edita(Request $request, $id)
     {
+        $om_id = '';
+        if($request['tipo'] != 'usuario'){
+            $om_id = 1;
+        } else {
+            $om_id = $request['om_id'];
+        }
         $usuario = User::find($id);
         $usuario->nome = $request['nome'];
         $usuario->email = $request['email'];
         $usuario->tipo = $request['tipo'];
-        $usuario->om_id = $request['om_id_edita'];
+        $usuario->om_id = $om_id;
         $usuario->save();
         return response()->json($usuario);
     }

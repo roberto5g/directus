@@ -52,14 +52,14 @@
                             </div>
                             {{--OM--}}
 
-                                <div id="om" class="col">
-                                    <div class="form-group">
-                                        <label for="om_id" class="preto">Organização Militar</label>
-                                        <select class="form-control form_select2 required"
-                                                name="om_id" id="om_id">
-                                        </select>
-                                    </div>
+                            <div id="om" class="col">
+                                <div class="form-group">
+                                    <label for="om_id" class="preto">Organização Militar</label>
+                                    <select class="form-control form_select2 required"
+                                            name="om_id" id="om_id">
+                                    </select>
                                 </div>
+                            </div>
 
                         </div>
 
@@ -181,15 +181,15 @@
 
                                 {{--OM--}}
 
-                                    <div id="om_edita" class="col">
-                                        <div class="form-group">
-                                            <label for="om_id_edita" class="preto">Organização Militar</label>
-                                            <select class="form-control form_select2 required"
-                                                    name="om_id_edita" id="om_id_edita">
-                                            </select>
+                                <div id="om_edita" class="col">
+                                    <div class="form-group">
+                                        <label for="om_id_edita" class="preto">Organização Militar</label>
+                                        <select class="form-control form_select2 required"
+                                                name="om_id" id="om_id_edita">
+                                        </select>
 
-                                        </div>
                                     </div>
+                                </div>
 
 
                             </div>
@@ -384,7 +384,6 @@
         })
 
         $('#tipo').on('change', function () {
-            console.log($(this).valid())
             if ($(this).valid()) {
                 if ($(this).val() != 'usuario') {
                     $('#om').removeClass('enable').addClass('disable');
@@ -392,8 +391,17 @@
                     $('#om').removeClass('disable').addClass('enable');
                 }
             }
+        });
 
-        })
+        $('#tipo_edita').on('change', function () {
+            if ($(this).valid()) {
+                if ($(this).val() != 'usuario') {
+                    $('#om_edita').removeClass('enable').addClass('disable');
+                } else {
+                    $('#om_edita').removeClass('disable').addClass('enable');
+                }
+            }
+        });
 
         function editarSenha(adm) {
             $('#ModalResetaSenha').modal('show')
@@ -638,6 +646,15 @@
             $('#nome_edita').val($('#edita_' + id).data('nome'));
             $('#email_edita').val($('#edita_' + id).data('email'));
             let tipo = $('#edita_' + id).data('tipo');
+
+
+            if (tipo != 'usuario') {
+                $('#om_edita').removeClass('enable').addClass('disable');
+            } else {
+                $('#om_edita').removeClass('disable').addClass('enable');
+            }
+
+
             $('#tipo_edita').empty();
             let tipos = ['administrador', 'gerente', 'usuario'];
             let tipos_view = ['Administrador do sistema', 'Controle de perguntas', 'Usuário'];
