@@ -107,6 +107,7 @@
                             <tr>
                                 <th class="text-center">Nome</th>
                                 <th class="text-center">Organização Militar</th>
+                                <th class="text-center">Sigla</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Tipo</th>
                                 <th class="text-center">Ações</th>
@@ -328,7 +329,7 @@
                 'order': [0, 'desc'],
                 'columnDefs': [
                     {
-                        "targets": [0, 1, 2, 3, 4], // your case first column
+                        "targets": [0, 1, 2, 3, 4,5], // your case first column
                         "className": "text-center",
                     },
                     {
@@ -341,10 +342,10 @@
                         "width": "20%", "targets": 2
                     },
                     {
-                        "width": "20%", "targets": 3
+                        "width": "20%", "targets": 4
                     },
                     {
-                        "targets": 3,
+                        "targets": 4,
                         render: function (data) {
                             let tipos = ['administrador', 'gerente', 'usuario'];
                             let tipos_view = ['Administrador do sistema', 'Controle de perguntas', 'Usuário'];
@@ -364,10 +365,10 @@
                         }
                     },
                     {
-                        "width": "10%", "targets": 4
+                        "width": "10%", "targets": 5
                     },
                     {
-                        "targets": [4],
+                        "targets": [5],
                         "orderable": false
                     },
                 ],
@@ -375,6 +376,7 @@
                 "columns": [
                     {"data": "nome"},
                     {"data": "om.nome"},
+                    {"data": "om.sigla"},
                     {"data": "email"},
                     {"data": "tipo"},
                     {"data": "action"},
