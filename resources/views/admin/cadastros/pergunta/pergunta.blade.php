@@ -46,6 +46,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="alert alert-primary">
+                                        <small id="formatoHelp"
+                                               class="form-text text-center">
+                                            <b>Só serão aceitos arquivos nos seguintes formatos:
+                                                ( jpg, jpeg, png,
+                                                pdf, doc, docx, dotx, txt, cvs, ods,
+                                                xls, odp, odt, pps, ppsx, ppt, pptx ) e com tamanho máximo de 2mb.</b>
+
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="alert alert-silver">
@@ -168,6 +182,20 @@
                                                 <div class="file-loading">
                                                     <input id="anexo_edita" type="file" name="anexo" class="file documento_comprobatorio" data-browse-on-zone-click="false" data-overwrite-initial="false" data-min-file-count="2" data-show-preview="false">
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="alert alert-primary">
+                                                <small id="formatoHelp"
+                                                       class="form-text text-center">
+                                                    <b>Só serão aceitos arquivos nos seguintes formatos:
+                                                        ( jpg, jpeg, png,
+                                                        pdf, doc, docx, dotx, txt, cvs, ods,
+                                                         xls, odp, odt, pps, ppsx, ppt, pptx ) e com tamanho máximo de 2mb.</b>
+
+                                                </small>
                                             </div>
                                         </div>
                                     </div>

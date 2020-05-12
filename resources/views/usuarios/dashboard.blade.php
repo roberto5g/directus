@@ -54,12 +54,26 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="alert alert-primary">
+                                <small id="formatoHelp"
+                                       class="form-text text-center">
+                                    <b>Só serão aceitos arquivos nos seguintes formatos:
+                                        ( jpg, jpeg, png,
+                                        pdf, doc, docx, dotx, txt, cvs, ods,
+                                        xls, odp, odt, pps, ppsx, ppt, pptx ) e com tamanho máximo de 2mb.</b>
+
+                                </small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col">
                         <button class="btn btn-block btn-success responder" id="{{$pergunta->id}}">
-                            Responder
+                            Responder Pergunta
                         </button>
                     </div>
                 </div>
