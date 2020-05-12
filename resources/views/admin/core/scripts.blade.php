@@ -1,6 +1,7 @@
 <!-- Bootstrap and necessary plugins -->
 <script src="{{ asset('js/vendor/jquery.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap-fileinput/fileinput.js') }}"></script>
+<script src="{{ asset('js/bootstrap-fileinput/pt-BR.js') }}"></script>
 <script src="{{ asset('js/bootstrap-fileinput/theme.js') }}"></script>
 <script src="{{ asset('js/bootstrap-fileinput/popper.min.js') }}"></script>
 <script src="{{ asset('js/vendor/popper.min.js') }}"></script>

@@ -93,7 +93,7 @@
                         <div class="row">
                             <div class="col">
                                 <button type="submit" class="btn btn-block btn-success">
-                                    Cadastrar
+                                    Cadastrar Pergunta
                                 </button>
                             </div>
                         </div>
@@ -220,7 +220,7 @@
                                     </div>
                                     <div class="col">
                                         <button type="submit" class="btn btn-block btn-secondary">
-                                            Editar
+                                            Editar Pergunta
                                         </button>
                                     </div>
                                 </div>

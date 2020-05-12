@@ -52,9 +52,12 @@
     $('.documento_comprobatorio').fileinput({
         theme: 'fa',
         uploadUrl: "/",
+        language: "pt-BR",
         required: true,
         dropZoneEnabled: false,
-        allowedFileExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+        allowedFileExtensions: ['jpg', 'jpeg', 'png',
+            'pdf','doc','docx','dotx','txt','cvs','ods',
+            'xls','odp','odt','pps','ppsx','ppt','pptx'],
         overwriteInitial: false,
         maxFileSize: 2000,
         maxFilesNum: 10
