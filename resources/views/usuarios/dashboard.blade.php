@@ -62,7 +62,7 @@
                                     <b>Só serão aceitos arquivos nos seguintes formatos:
                                         ( jpg, jpeg, png,
                                         pdf, doc, docx, dotx, txt, cvs, ods,
-                                        xls, odp, odt, pps, ppsx, ppt, pptx ) e com tamanho máximo de 2mb.</b>
+                                        xls, odp, odt, pps, ppsx, ppt, pptx e zip) e com tamanho máximo de 2mb.</b>
 
                                 </small>
                             </div>
