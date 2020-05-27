@@ -67,8 +67,8 @@
                                     <h3 class="text-center"><span>Entre na sua Conta</span></h3>
                                     <form method="POST" action="{{ route('login') }}">
                                         {{ csrf_field() }}
-                                        @if ($errors->has('email'))
-                                            <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
+                                        @if ($errors->has('username'))
+                                            <span class="help-block"><strong>{{ $errors->first('username') }}</strong></span>
                                         @endif
 
                                         <div class="input-group mb-3">
