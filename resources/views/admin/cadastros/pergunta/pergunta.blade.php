@@ -336,13 +336,6 @@
 <script>
     $(document).ready(function() {
 
-        var editor = new Simditor({
-            textarea: $('#descricao'),
-            upload: false,
-            toolbar: true,
-            //optional options
-        });
-
         $('[data-toggle="tooltip"]').tooltip();
         $('.modal').on('hidden.bs.modal', function() {
             $('input').each(function() {

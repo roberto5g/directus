@@ -19,10 +19,6 @@
 <script src="{{ asset('js/vendor/jquery.loadingModal.js') }}"></script>
 <script src="{{ asset('js/vendor/croppie.js') }}"></script>
 <script src="{{ asset('js/vendor/moment.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap-markdown/module.js') }}"></script>
-<script src="{{ asset('js/bootstrap-markdown/hotkeys.js') }}"></script>
-<script src="{{ asset('js/bootstrap-markdown/uploader.js') }}"></script>
-<script src="{{ asset('js/bootstrap-markdown/simditor.js') }}"></script>
 
 
 
