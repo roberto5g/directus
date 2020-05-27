@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('css/select2-bootstrap4.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/fullcalendar.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/fileinput.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-markdown/simditor.css') }}"/>
 
 </head>
 

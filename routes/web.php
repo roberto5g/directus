@@ -12,7 +12,7 @@
 */
 
 Auth::routes();
-Route::get('/admin/gerencia/verificaemail/{acao}', 'User\UserController@verificaEmail');
+Route::get('/admin/gerencia/verificalogin/{acao}', 'User\UserController@verificaLogin');
 Route::get('/admin/gerencia/verificacpf/{acao}', 'User\UserController@verificaCpf');;
 
 Route::get('/{hash}/conta', 'Candidato\DadosBasicosController@ativarConta');

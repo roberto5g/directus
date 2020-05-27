@@ -73,10 +73,10 @@
 
                                         <div class="input-group mb-3">
                                             <span class="input-group-addon"><i class="icon-user"></i></span>
-                                            <input type="text" name="email" value="{{ old('email') }}"
+                                            <input type="text" name="username" value="{{ old('username') }}"
                                                    class="form-control"
                                                    required
-                                                   autofocus placeholder="Informe seu E-mail">
+                                                   autofocus placeholder="Informe seu usuário">
                                         </div>
 
                                         @if ($errors->has('password'))

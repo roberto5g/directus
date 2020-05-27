@@ -25,9 +25,10 @@ class UserController extends Controller
         }
         $usuario = User::create([
             'nome' => $request['nome'],
-            'email' => strtolower($request['email']),
+            'username' => strtolower($request['username']),
             'password' => bcrypt($request['password']),
             'om_id' =>  $om_id,
+            'email' => str_random(24).'@12rm.eb.mil.br',
             'tipo' => $request['tipo'],
             'status' => 'pendente',
         ]);
@@ -53,7 +54,7 @@ class UserController extends Controller
         }
         $usuario = User::find($id);
         $usuario->nome = $request['nome'];
-        $usuario->email = $request['email'];
+        $usuario->username = $request['username'];
         $usuario->tipo = $request['tipo'];
         $usuario->om_id = $om_id;
         $usuario->save();
@@ -63,7 +64,7 @@ class UserController extends Controller
     public function resetaSenha($id)
     {
         $usuario = User::find($id);
-        $usuario->password = bcrypt($usuario->email);
+        $usuario->password = bcrypt($usuario->username);
         $usuario->save();
     }
 
@@ -85,7 +86,7 @@ class UserController extends Controller
                         <a href="#" class="link-simples editar_administrador" onclick="editarAdmin(' . $query->id . ')" 
                         id="edita_' . $query->id . '" 
                         data-nome="' . $query->nome . '" 
-                        data-email="' . $query->email . '" 
+                        data-login="' . $query->username . '" 
                         data-tipo="' . $query->tipo . '" 
                         data-om_id="' . $query->om_id . '" 
                             data-toggle="modal">
@@ -108,15 +109,15 @@ class UserController extends Controller
         })->make(true);
     }
 
-    public function verificaEmail($acao, Request $resquest)
+    public function verificaLogin($acao, Request $resquest)
     {
         //dd($resquest);
-        $resultado = User::where('email', $resquest['email'])->first();
+        $resultado = User::where('username', $resquest['username'])->first();
         $retorno = "";
 
         if ($acao == 'cadastro') {
             if ($resultado) {
-                $retorno = "O email já encontra-se em nossa base de dados.";
+                $retorno = "O login já encontra-se em nossa base de dados.";
             } else {
                 $retorno = "true";
             }
@@ -124,14 +125,14 @@ class UserController extends Controller
             if ($resultado) {
                 $retorno = "true";
             } else {
-                $retorno = "O email informado não esta em nossa base de dados";
+                $retorno = "O login informado não esta em nossa base de dados";
             }
         } elseif ($acao == 'editar'){
             if ($resultado) {
                 if($resultado->id == $resquest['adm_id']){
                     $retorno = 'true';
                 } else {
-                    $retorno = 'O email já encontra-se em nossa base de dados';
+                    $retorno = 'O login já encontra-se em nossa base de dados';
                 }
             } else {
                 $retorno = 'true';

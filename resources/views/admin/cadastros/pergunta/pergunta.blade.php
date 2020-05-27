@@ -21,12 +21,11 @@
                 <form id="form_nova_pergunta" action="/admin/gerencia/cadastro/pergunta" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="alert alert-simples">
-
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <label for="descricao">Faça uma pergunta</label>
-                                    <textarea name="descricao" class="form-control" id="descricao" type="text" rows="5" cols="30" dir="ltr" placeholder="Insira a descrição da pergunta" required></textarea>
+                                    <textarea name="descricao" class="form-control" id="descricao" type="text" autofocus rows="5" cols="30" dir="ltr" placeholder="Insira a descrição da pergunta" required></textarea>
 
                                 </div>
                             </div>
@@ -336,6 +335,14 @@
 
 <script>
     $(document).ready(function() {
+
+        var editor = new Simditor({
+            textarea: $('#descricao'),
+            upload: false,
+            toolbar: true,
+            //optional options
+        });
+
         $('[data-toggle="tooltip"]').tooltip();
         $('.modal').on('hidden.bs.modal', function() {
             $('input').each(function() {

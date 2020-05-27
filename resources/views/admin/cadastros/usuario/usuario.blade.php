@@ -39,15 +39,15 @@
                             </div>
                         </div>
 
-                        {{--Email--}}
+                        {{--login--}}
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
 
-                                    <label for="email">Email</label>
-                                    <input type="text" class="form-control" id="email"
-                                           aria-describedby="nomeHelp" name="email"
-                                           placeholder="Insira o email" required>
+                                    <label for="login">Login</label>
+                                    <input type="text" class="form-control" id="username"
+                                           aria-describedby="loginHelp" name="username"
+                                           placeholder="Insira o login" required>
                                 </div>
                             </div>
                             {{--OM--}}
@@ -106,9 +106,9 @@
                             <thead>
                             <tr>
                                 <th class="text-center">Nome</th>
+                                <th class="text-center">Login</th>
                                 <th class="text-center">Organização Militar</th>
                                 <th class="text-center">Sigla</th>
-                                <th class="text-center">Email</th>
                                 <th class="text-center">Tipo</th>
                                 <th class="text-center">Ações</th>
                             </tr>
@@ -168,15 +168,15 @@
                                 </div>
                             </div>
 
-                            {{--Email e cpf--}}
+                            {{--login e cpf--}}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
 
-                                        <label for="email_edita">Email</label>
-                                        <input type="text" class="form-control" id="email_edita"
-                                               aria-describedby="nome_editaHelp" name="email"
-                                               placeholder="Insira o email" required>
+                                        <label for="username_edita">Login</label>
+                                        <input type="text" class="form-control" id="username_edita"
+                                               aria-describedby="login_editaHelp" name="username"
+                                               placeholder="Insira o login" required>
                                     </div>
                                 </div>
 
@@ -236,7 +236,7 @@
                         </p>
 
                         <p>
-                            Com isso, ele deverá usar o email cadastrado como senha de acesso.
+                            Com isso, ele deverá usar o login cadastrado como senha de acesso.
                         </p>
 
 
@@ -378,9 +378,9 @@
 
                 "columns": [
                     {"data": "nome"},
+                    {"data": "username"},
                     {"data": "om.nome"},
                     {"data": "om.sigla"},
-                    {"data": "email"},
                     {"data": "tipo"},
                     {"data": "action"},
                 ]
@@ -553,19 +553,18 @@
                     minlength: 3,
                     equalTo: "#password"
                 },
-                email: {
+                username: {
                     required: true,
-                    email: true,
                     remote: {
-                        url: "/admin/gerencia/verificaemail/cadastro",
+                        url: "/admin/gerencia/verificalogin/cadastro",
                         type: "get"
                     }
                 }
             },
             messages: {
 
-                email: {
-                    required: "Por favor, informe o email."
+                username: {
+                    required: "Por favor, informe o login."
                 },
                 om_id: {
                     required: "Por favor, informe uma Organização militar."
@@ -649,7 +648,7 @@
             $('#adm_id').val(id);
 
             $('#nome_edita').val($('#edita_' + id).data('nome'));
-            $('#email_edita').val($('#edita_' + id).data('email'));
+            $('#username_edita').val($('#edita_' + id).data('login'));
             let tipo = $('#edita_' + id).data('tipo');
 
 
@@ -726,15 +725,14 @@
                         }
                     }
                 },
-                email: {
+                login: {
                     required: true,
-                    email: true,
                     remote: {
-                        url: "/admin/gerencia/verificaemail/editar",
+                        url: "/admin/gerencia/verificalogin/editar",
                         type: "get",
                         data: {
-                            email: function () {
-                                return $('#email_edita').val();
+                            login: function () {
+                                return $('#username_edita').val();
                             },
                             adm_id: function () {
                                 return $('#adm_id').val();
@@ -744,8 +742,8 @@
                 }
             },
             messages: {
-                email: {
-                    required: "Por favor, informe o email."
+                username: {
+                    required: "Por favor, informe o login."
                 },
                 om_id: {
                     required: "Por favor, informe uma Organização militar."
