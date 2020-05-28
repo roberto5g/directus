@@ -136,7 +136,7 @@ class PerguntaController extends Controller
                     for($z = 0; $z < count($perguntas[$j]->respostas); $z++){
                         if($perguntas[$j]->respostas[$z]->users->om_id == $perguntas[$j]->om[$x]->om_id){
                             $item->resposta = $perguntas[$j]->respostas[$z]->resposta;
-                            $item->data = date('d/m/Y h:m:s', strtotime($perguntas[$j]->respostas[$z]->created_at));
+                            $item->data = date('d/m/Y H:m:s', strtotime($perguntas[$j]->respostas[$z]->created_at));
                             $item->anexo = $perguntas[$j]->respostas[$z]->anexo_resposta;
                         }
                     }
