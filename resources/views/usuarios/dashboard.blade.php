@@ -269,7 +269,7 @@
             "ajax": "/usuario/lista/respostas",
             'order': [0, 'desc'],
             'columnDefs': [{
-                "targets": [0, 1, 2, 3, 4], // your case first column
+                "targets": [0, 2, 3, 4], // your case first column
                 "className": "text-center",
             },
                 {

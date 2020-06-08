@@ -54,8 +54,8 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="pergunta_tabela"><b>Pergunta:</b> <span
-                                                id="pergunta_tabela"></span></label><br>
+                                    <label for="pergunta_tabela"><b>Pergunta:</b></label>
+                                    <div id="pergunta_tabela"></div>
                                     <div class="anexo_pergunta"></div>
                                 </div>
                             </div>
@@ -239,8 +239,12 @@
             });
 
 
-            $('#pergunta').text($('#detalhes_' + id).data('descricao'));
-            $('#pergunta_tabela').text($('#detalhes_' + id).data('descricao'));
+            $.getJSON('/admin/gerencia/edita/pergunta/' + id, function (pergunta) {
+
+                $('#pergunta_tabela').html(pergunta.descricao)
+            });
+
+
             $('.respostas_om').empty();
             $('.anexo_pergunta').empty();
 
@@ -268,7 +272,7 @@
             'order': [0, 'desc'],
             'columnDefs': [
                 {
-                    "targets": [0, 1, 2, 3, 4, 5], // your case first column
+                    "targets": [0, 2, 3, 4, 5], // your case first column
                     "className": "text-center",
                 },
                 {

@@ -384,7 +384,7 @@
             "ajax": "/admin/gerencia/lista/pergunta/getdata",
             'order': [0, 'desc'],
             'columnDefs': [{
-                "targets": [0, 1, 2, 3], // your case first column
+                "targets": [1, 2, 3], // your case first column
                 "className": "text-center",
             },
                 {

@@ -25,7 +25,7 @@ class PerguntaRequest extends FormRequest
     {
 
         return [
-            'descricao' => 'required|max:255',
+            'descricao' => 'required',
         ];
     }
 
