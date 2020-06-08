@@ -49,7 +49,8 @@ Route::middleware('auth')->group(function () {
     //pergunta
     Route::get('/admin/gerencia/pergunta', 'Pergunta\PerguntaController@index')->name('pergunta');
     Route::post('/admin/gerencia/cadastro/pergunta', 'Pergunta\PerguntaController@cadastra');
-    Route::post('/admin/gerencia/edita/pergunta', 'Pergunta\PerguntaController@edita');
+    Route::get('/admin/gerencia/edita/pergunta/{id}', 'Pergunta\PerguntaController@edita');
+    Route::post('/admin/gerencia/update/pergunta', 'Pergunta\PerguntaController@update');
     Route::get('/admin/gerencia/lista/pergunta/getdata', 'Pergunta\PerguntaController@getData');
     Route::get('/admin/gerencia/lista/perguntas', 'Pergunta\PerguntaController@listaData');
     Route::post('/admin/gerencia/remove/pergunta/{id}', 'Pergunta\PerguntaController@remove');

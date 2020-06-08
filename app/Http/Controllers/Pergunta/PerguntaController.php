@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pergunta;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PerguntaRequest;
 use App\Models\Perguntas\OmPerguntas;
 use App\Models\Respostas\Respostas;
 use App\Models\Om\Om;
@@ -21,10 +22,9 @@ class PerguntaController extends Controller
         return view('admin.cadastros.pergunta.pergunta');
     }
 
-    public function cadastra(FormRequest $request)
+    public function cadastra(PerguntaRequest $request)
     {
 
-        //dd($request->all());
         $pergunta = new Perguntas();
         $pergunta->descricao = $request['descricao'];
         $pergunta->user_id = auth()->user()->id;
@@ -64,7 +64,14 @@ class PerguntaController extends Controller
     }
 
 
-    public function edita(FormRequest $request)
+    public function edita( $id)
+    {
+        $pergunta = Perguntas::find($id);
+
+        return response()->json($pergunta);
+    }
+
+    public function update(PerguntaRequest $request)
     {
 
         $pergunta = Perguntas::find($request['pergunta_id']);
@@ -232,15 +239,21 @@ class PerguntaController extends Controller
             if ($query->status == 'Ativo') {
                 return '<div class="text-center"> 
                        
-                        <a href="#" class="link-simples " id="edita_' . $query->id . '" onclick="editaPergunta(' . $query->id . ')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
+                        <a href="#" class="link-simples " id="edita_' . $query->id . '" 
+                        onclick="editaPergunta(' . $query->id . ')"                       
+                        data-toggle="modal">
                             <i class="fa fa-edit separaicon " data-toggle="tooltip" data-placement="top" title="Editar Pergunta"></i>
                         </a>
                         
-                        <a href="#" class="link-simples " id="remove_' . $query->id . '" onclick="removePergunta(' . $query->id . ')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
+                        <a href="#" class="link-simples " id="remove_' . $query->id . '" 
+                        onclick="removePergunta(' . $query->id . ')"  
+                        data-toggle="modal">
                             <i class="fa fa-trash separaicon " data-toggle="tooltip" data-placement="top" title="Remover Pergunta"></i>
                         </a>
                         
-                        <a href="#" class="link-simples " id="inativa_' . $query->id . '" onclick="inativaPergunta(' . $query->id . ')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
+                        <a href="#" class="link-simples " id="inativa_' . $query->id . '" 
+                        onclick="inativaPergunta(' . $query->id . ')"  
+                        data-toggle="modal">
                             <i class="fa fa-ban separaicon " data-toggle="tooltip" data-placement="top" title="Inativar Pergunta"></i>
                         </a>
              
@@ -248,15 +261,21 @@ class PerguntaController extends Controller
             } else {
                 return '<div class="text-center"> 
                        
-                        <a href="#" class="link-simples " id="edita_' . $query->id . '" onclick="editaPergunta(' . $query->id . ')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
+                        <a href="#" class="link-simples " id="edita_' . $query->id . '" 
+                        onclick="editaPergunta(' . $query->id . ')"  
+                        data-toggle="modal">
                             <i class="fa fa-edit separaicon " data-toggle="tooltip" data-placement="top" title="Editar Pergunta"></i>
                         </a>
                         
-                        <a href="#" class="link-simples " id="remove_' . $query->id . '" onclick="removePergunta(' . $query->id . ')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
+                        <a href="#" class="link-simples " id="remove_' . $query->id . '" 
+                        onclick="removePergunta(' . $query->id . ')"  
+                        data-toggle="modal">
                             <i class="fa fa-trash separaicon " data-toggle="tooltip" data-placement="top" title="Remover Pergunta"></i>
                         </a>
                         
-                        <a href="#" class="link-simples " id="ativar_' . $query->id . '" onclick="ativarPergunta(' . $query->id . ')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
+                        <a href="#" class="link-simples " id="ativar_' . $query->id . '" 
+                        onclick="ativarPergunta(' . $query->id . ')"  
+                        data-toggle="modal">
                             <i class="fa fa-mail-reply separaicon " data-toggle="tooltip" data-placement="top" title="Ativar Pergunta"></i>
                         </a>
              
@@ -313,7 +332,9 @@ class PerguntaController extends Controller
 
             return '<div class="text-center"> 
                        
-                        <h6><a href="#" class="badge badge-secondary" id="detalhes_' . $query->id . '" onclick="detalhesPergunta(' . $query->id . ')"  data-descricao="' . $query->descricao . '" data-toggle="modal">
+                        <h6><a href="#" class="badge badge-secondary" id="detalhes_' . $query->id . '" 
+                        onclick="detalhesPergunta(' . $query->id . ')"  
+                        data-toggle="modal">
                             <i class="fa fa-search separaicon " data-toggle="tooltip" data-placement="top" title="Detalhes Pergunta"></i>
                         </a></h6>
                     

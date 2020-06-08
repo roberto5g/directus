@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TipoExperienciaProfissionalRequest extends FormRequest
+class PerguntaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,7 +32,7 @@ class TipoExperienciaProfissionalRequest extends FormRequest
     public function messages()
     {
         return [
-            'descricao.required' => 'O campo "Descrição do Tipo de Experiência Profissional" não pode ser vazio.',
+            'descricao.required' => 'O campo "Descrição" não pode ser vazio.',
         ];
     }
 }

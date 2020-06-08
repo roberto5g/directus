@@ -110,7 +110,6 @@
     MINISTÉRIO DA DEFESA<br>
     EXÉRCITO BRASILEIRO<br>
     COMANDO DA 12ª REGIÃO MILITAR<br>
-    (Comando de Elemento de Fronteira/1948)<br>
     REGIÃO MENDONÇA FURTADO<br>
 </div>
 <div class="titulo">
@@ -121,7 +120,7 @@
 <table width="100%" border="1px">
     <tr>
         <th colspan="3" class="topo_tabela">Pergunta
-            <br>{{$pergunta->descricao}}<br>
+            <br>{{strip_tags($pergunta->descricao)}}<br>
         </th>
     </tr>
     <tr>
@@ -134,7 +133,7 @@
 
             <tr>
                 <td class="om">{{$om->sigla}}</td>
-                <td class="om">{{$om->resposta}}</td>
+                <td class="om">{{strip_tags($om->resposta)}}</td>
                 <td class="center">{{$om->data}}</td>
 
             </tr>

@@ -445,3 +445,8 @@ $.fn.mSort = function(callback) {
 
     return this;
 };
+
+function strip(html){
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
+}

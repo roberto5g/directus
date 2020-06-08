@@ -167,7 +167,7 @@
         });
 
         function detalhesPergunta(id) {
-            console.log(id)
+
             $('#ModalDetalhe').modal('show');
             $('.pergunta_id').val(id);
 
@@ -178,7 +178,7 @@
                 "ajax": "admin/gerencia/lista/pergunta/" + id,
                 'order': [0, 'desc'],
                 rowCallback: function (row, data, index) {
-                    if(data.status == 'pendente'){
+                    if (data.status == 'pendente') {
                         $(row).css('background-color', '#FA5858');
                     }
                 },
@@ -188,14 +188,15 @@
                         "className": "text-center",
                     },
                     {
-                        "targets": 1, // your case first column
-                        "className": "text-left",
-                    },
-                    {
                         "width": "20%", "targets": 0
                     },
                     {
-                        "width": "60%", "targets": 1
+                        "targets": 1, // your case first column
+                        "className": "text-left",
+                        "width": "60%",
+                        render: function (data) {
+                            return strip(data);
+                        }
                     },
                     {
                         "width": "10%", "targets": 2
@@ -220,7 +221,7 @@
                             if (data != null && data != "--") {
                                 return '<h6><a href="/storage/' + data + '"  class="badge badge-success" target="_blank">' +
                                     '<i class="fa fa-file-text"></i> anexo</a></h6>';
-                            } else if(data == null){
+                            } else if (data == null) {
                                 return '<h6><span class="badge badge-warning"> sem anexo </span></h6>';
                             } else {
                                 return '<span class="text-center"> -- </span>';
@@ -267,14 +268,17 @@
             'order': [0, 'desc'],
             'columnDefs': [
                 {
-                    "targets": [0, 1, 2, 3, 4,5], // your case first column
+                    "targets": [0, 1, 2, 3, 4, 5], // your case first column
                     "className": "text-center",
                 },
                 {
                     "width": "20%", "targets": 0
                 },
                 {
-                    "width": "40%", "targets": 1
+                    "width": "40%", "targets": 1,
+                    render: function (data) {
+                        return strip(data);
+                    }
                 },
                 {
                     "width": "10%", "targets": 2

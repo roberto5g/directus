@@ -19,6 +19,7 @@
 <script src="{{ asset('js/vendor/jquery.loadingModal.js') }}"></script>
 <script src="{{ asset('js/vendor/croppie.js') }}"></script>
 <script src="{{ asset('js/vendor/moment.min.js') }}"></script>
+<script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
 
 
 
