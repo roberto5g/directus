@@ -59,7 +59,7 @@
             'pdf','doc','docx','dotx','txt','cvs','ods',
             'xls','odp','odt','pps','ppsx','ppt','pptx','zip'],
         overwriteInitial: false,
-        maxFileSize: 2000,
+        maxFileSize: 10240,
         maxFilesNum: 10
     });
 
